@@ -15,9 +15,9 @@ export interface Props {
 }
 const { data, displaySettings } = Astro.props as Props;
 const videoUrl = data?.Video?.url?.default ?? null;
-const imageUrl = data?.Image?.url?.default || null;
+const imageUrl = (data?.Image as any)?.item?.Url || data?.Image?.url?.default || null;
 const hasVideo = videoUrl !== null;
-const { justifyClass, backgroundOpacityClass, textClasses, heightClass } =
+const { justifyClass, backgroundOpacityClass, textClasses, heightClass, imageFitClass } =
     getHeroStyles(displaySettings);
 
 const globalStyles = getGlobalStyles(displaySettings);
@@ -48,8 +48,8 @@ const globalStyles = getGlobalStyles(displaySettings);
         !hasVideo && imageUrl && (
             <AstroImage
                 src={imageUrl}
-                alt={data.Image?.item?.AltText || data.Image?.item?._metadata?.displayName || data.Heading || ''}
-                class="absolute inset-0 h-full w-full object-cover"
+                alt={(data.Image as any)?.item?.AltText || (data.Image as any)?.item?._metadata?.displayName || data.Heading || ''}
+                class={`absolute inset-0 h-full w-full ${imageFitClass}`}
                 id="hero-image"
                 inferSize={true}
             />

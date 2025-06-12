@@ -1,4 +1,8 @@
 fragment Carousel on Carousel {
+    Heading
+    Link {
+        ...LinkUrl
+    }
     Assets {
         url {
             default

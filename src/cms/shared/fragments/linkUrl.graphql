@@ -1,0 +1,9 @@
+fragment LinkUrl on Link {
+    url {
+        default
+        hierarchical
+    }
+    title
+    target
+    text
+}

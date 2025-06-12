@@ -6,24 +6,9 @@ fragment Card on Card {
         html
     }
     Asset {
-        url {
-            default
-        }
-        item {
-            ... on ImageMedia {
-                AltText
-            }
-            ... on _IContent {
-                _metadata {
-                    displayName
-                }
-            }
-        }
+        ...ContentUrl
     }
     Links {
-        text
-        url {
-            default
-        }
+        ...LinkCollection
     }
 }

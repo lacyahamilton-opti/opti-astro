@@ -10,10 +10,10 @@ Pre-requisites for quick deploy:
 Deploy this project with one click:
 
 ### Vercel
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkunalshetye%2Fopti-astro&env=OPTIMIZELY_CMS_URL,OPTIMIZELY_GRAPH_GATEWAY,OPTIMIZELY_GRAPH_SINGLE_KEY,OPTIMIZELY_GRAPH_APP_KEY,OPTIMIZELY_GRAPH_SECRET&envDescription=Required%20API%20keys%20for%20Optimizely%20Graph%20integration&envLink=https%3A%2F%2Fgithub.com%2Fkunalshetye%2Fopti-astro%23environment-setup&project-name=opti-astro&repository-name=opti-astro)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkunalshetye%2Fopti-astro&env=OPTIMIZELY_CMS_URL,OPTIMIZELY_GRAPH_GATEWAY,OPTIMIZELY_GRAPH_SINGLE_KEY,OPTIMIZELY_GRAPH_APP_KEY,OPTIMIZELY_GRAPH_SECRET,OPTIMIZELY_DAM_ENABLED&envDescription=Required%20API%20keys%20for%20Optimizely%20Graph%20integration&envLink=https%3A%2F%2Fgithub.com%2Fkunalshetye%2Fopti-astro%23environment-setup&project-name=opti-astro&repository-name=opti-astro)
 
 ### Netlify
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/kunalshetye/opti-astro#OPTIMIZELY_CMS_URL=&OPTIMIZELY_GRAPH_GATEWAY=https://cg.optimizely.com&OPTIMIZELY_GRAPH_SINGLE_KEY=&OPTIMIZELY_GRAPH_APP_KEY=&OPTIMIZELY_GRAPH_SECRET=)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/kunalshetye/opti-astro#OPTIMIZELY_CMS_URL=&OPTIMIZELY_GRAPH_GATEWAY=https://cg.optimizely.com&OPTIMIZELY_GRAPH_SINGLE_KEY=&OPTIMIZELY_GRAPH_APP_KEY=&OPTIMIZELY_GRAPH_SECRET=&OPTIMIZELY_DAM_ENABLED=false)
 
 **Note:** You'll need to configure the environment variables during deployment. See the [Environment Setup](#environment-setup) section below for required values.
 
@@ -37,6 +37,7 @@ More in-depth setup and usage instructions will follow.
 4. <a id="environment-setup"></a>**Environment Setup**: Create your *.env* file based on the [.env.template](/.env.template) example
    1. Values can be found at: *CMS > Settings > API Keys*
    2. Note, you must create a new API key for managing styles (it does not exist by default)
+   3. Configure DAM settings based on your CMS instance capabilities (see [Environment Variables](#environment-variables) below)
 5. Install dependencies using Yarn (or your preferred package manager):
     ```sh
     yarn install
@@ -55,6 +56,40 @@ More in-depth setup and usage instructions will follow.
    ```
 
 **Result**: your frontend should now load at https://localhost:4321/ and inside the CMS for content preview.
+
+## Environment Variables
+
+The following environment variables are required for the application to function properly:
+
+### Required API Keys
+| Variable | Description | Where to find |
+|----------|-------------|---------------|
+| `OPTIMIZELY_CMS_URL` | Your CMS instance URL | CMS domain (e.g., `https://app-yourinstance.cms.optimizely.com`) |
+| `OPTIMIZELY_GRAPH_GATEWAY` | Optimizely Graph API endpoint | Usually `https://cg.optimizely.com` |
+| `OPTIMIZELY_GRAPH_SINGLE_KEY` | Single-use API key for Graph | *CMS > Settings > API Keys* |
+| `OPTIMIZELY_GRAPH_APP_KEY` | Application key for Graph | *CMS > Settings > API Keys* |
+| `OPTIMIZELY_GRAPH_SECRET` | Secret key for Graph | *CMS > Settings > API Keys* |
+| `OPTIMIZELY_CLIENT_ID` | API client ID for style management | *CMS > Settings > API Keys* (create new) |
+| `OPTIMIZELY_CLIENT_SECRET` | API client secret for style management | *CMS > Settings > API Keys* (create new) |
+
+### Optional Configuration
+| Variable | Description | Default | Usage |
+|----------|-------------|---------|-------|
+| `PREVIEW_DELAY` | Delay in ms for content preview updates | `600` | Increase if preview updates are unreliable |
+| `OPTIMIZELY_DAM_ENABLED` | Enable DAM (Digital Asset Management) features | `false` | Set to `true` if your CMS instance has DAM enabled |
+
+### DAM Configuration
+The `OPTIMIZELY_DAM_ENABLED` variable controls how GraphQL queries are generated:
+
+- **`false` (default)**: Uses standard GraphQL fragments without DAM-specific fields like `item.AltText`
+- **`true`**: Uses enhanced GraphQL fragments that include DAM fields for richer media metadata
+
+**How to determine if DAM is enabled:**
+1. Check if your CMS instance includes Digital Asset Management features
+2. Test GraphQL queries - if `ContentReference.item` field exists in your schema, DAM is enabled
+3. Contact your Optimizely administrator if unsure
+
+**Important**: Setting this incorrectly will cause GraphQL compilation errors during `yarn codegen`.
 
 ### Additional setup notes
 #### Site Settings

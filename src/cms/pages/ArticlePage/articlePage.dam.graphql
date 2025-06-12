@@ -1,0 +1,19 @@
+fragment ArticlePage on ArticlePage {
+    _metadata {
+        ...PageUrl
+        published
+    }
+    PromoImage {
+        ...ContentUrl
+        ...ContentReferenceItem
+    }
+    Heading
+    SubHeading
+    Author
+    Body {
+        html
+    }
+    SeoSettings {
+        ...PageSeoSettingsProperty
+    }
+}
