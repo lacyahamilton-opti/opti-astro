@@ -2,6 +2,7 @@
 import { Image as AstroImage } from 'astro:assets';
 import type { SiteSettingsByHostnameQuery } from '../../../__generated/sdk';
 import { getClassForLogo } from './siteSettingsHelper';
+import DevTools from './DevTools.astro';
 
 // Define interfaces for the menu items to fix TypeScript errors
 interface LinkType {
@@ -21,6 +22,8 @@ interface Props {
 
 const { siteSettings } = Astro.props;
 const settings = siteSettings?.SiteSettings?.item;
+
+const logoUrl = (settings?.Logo as any)?.item?.Url || settings?.Logo?.url?.default || null;
 const logoCss = getClassForLogo(settings?.LogoResolution);
 
 const footerItems = settings?.FooterLinks as FooterItemType[] | undefined;
@@ -32,17 +35,18 @@ const socialLinkTwitter = "https://www.twitter.com/" + settings?.SocialTwitter;
 const socialLinkTikTok = "https://www.tiktok.com/@" + settings?.SocialTikTok;
 const socialLinkGitHub = "https://www.github.com/" + settings?.SocialGitHub;
 
+
 ---
 
 <footer class="bg-base-200">
     <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <div class="flex justify-center text-primary">
             <AstroImage
-                class={logoCss}
-                src={settings?.Logo?.url?.default ?? '/optimizely-logo.svg'}
+                class:list={[logoCss, "w-full object-contain max-w-full"]}
+                src={logoUrl ?? '/optimizely-logo.svg'}
                 alt="Logo"
-                width={148}
-                height={148}
+                width=300
+                height=300
             />
         </div>
 
@@ -208,4 +212,7 @@ const socialLinkGitHub = "https://www.github.com/" + settings?.SocialGitHub;
             }
         </ul>
     </div>
+
+    <!-- Developer Tools -->
+    <DevTools />
 </footer>

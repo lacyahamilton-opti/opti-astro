@@ -7,7 +7,7 @@ export function getSectionStyles(grid: CompositionStructureNode): string[] {
     const dictionary = getDictionaryFromDisplaySettings(displaySettings);
     let cssClasses: string[] = [];
     switch (grid.displayTemplateKey) {
-        case 'DefaultGrid':
+        case 'DefaultSection':
             switch (dictionary['gridWidth']) {
                 case 'default':
                     cssClasses.push('container mx-auto px-8');
@@ -33,17 +33,7 @@ export function getSectionStyles(grid: CompositionStructureNode): string[] {
                     cssClasses.push('py-8 md:py-16 lg:py-24');
                     break;
             }
-            switch (dictionary['sectionColor']) {
-                case 'gray':
-                    cssClasses.push('bg-gray-100');
-                    break;
-                case 'black':
-                    cssClasses.push('bg-gray-950');
-                    break;
-                case 'blue':
-                    cssClasses.push('bg-blue-700');
-                    break;
-            }
+            // Background color is now handled by globalStylesHelper
             break;
         default:
             cssClasses.push('vb:NoStyles');

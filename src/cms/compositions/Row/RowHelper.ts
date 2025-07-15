@@ -50,5 +50,6 @@ export function getRowStyles(row: CompositionStructureNode) {
         VerticalSpacingClasses[dictionary['verticalSpacing']] ?? ''
     );
     cssClasses.push(RowFromClasses[dictionary['showAsRowFrom']] ?? '');
+    // Background color is now handled by globalStylesHelper
     return cssClasses;
 }

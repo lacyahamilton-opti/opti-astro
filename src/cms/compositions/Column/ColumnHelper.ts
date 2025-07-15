@@ -91,6 +91,8 @@ export function getColumnStyles(column: CompositionStructureNode) {
                     break;
             }
 
+            // Background color is now handled by globalStylesHelper
+
             cssClasses.push('relative top-0');
             let useChildContainer = false;
             switch (dictionary['overflow']) {
