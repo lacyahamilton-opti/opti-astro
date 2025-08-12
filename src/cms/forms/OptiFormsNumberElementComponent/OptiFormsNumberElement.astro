@@ -1,0 +1,55 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OptiFormsNumberElement,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { requiredValidatorMsg } from '../formHelper';
+
+// https://daisyui.com/components/input/
+
+export interface Props {
+    data: OptiFormsNumberElement;
+    contentPayload: ContentPayload;
+    displaySettings: DisplaySettingsFragment[];
+    Label?: string;
+    Placeholder?: string;
+    Tooltip?: string;
+    PredefinedValue?: string;
+    Validators?: any;
+    AutoComplete?: string;
+}
+const { data, displaySettings } = Astro.props as Props;
+const {
+    Label,
+    Placeholder,
+    Tooltip,
+    PredefinedValue,
+    Validators,
+    AutoComplete,
+} = data;
+
+const isRequiredErrorMsg = requiredValidatorMsg(Validators);
+
+const inputId = `number-${Label?.replace(/\s+/g, '-')}-${Math.random().toString(36).substr(2, 4)}`;
+---
+
+<label class="validator text-lg font-semibold" for={inputId}>{Label}</label>
+<input
+    id={inputId}
+    name={inputId}
+    type="number"
+    class="input w-full"
+    required={isRequiredErrorMsg ? true : false}
+    placeholder={Placeholder}
+    value={PredefinedValue}
+    autocomplete={AutoComplete || 'off'}
+    title={Tooltip}
+/>
+{
+    isRequiredErrorMsg && (
+        <span id="error-msg" class="mt-1 text-sm text-red-600">
+            {isRequiredErrorMsg}
+        </span>
+    )
+}

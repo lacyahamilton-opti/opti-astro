@@ -1,0 +1,60 @@
+---
+// https://daisyui.com/components/textarea/
+
+////// Style ideas:
+// Text Area Height
+//
+//////
+
+import type {
+    DisplaySettingsFragment,
+    OptiFormsTextareaElement,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import {
+    requiredValidatorMsg,
+    regExpValidatorMsg,
+    getRegularExpression,
+} from '../formHelper';
+
+export interface Props {
+    data: OptiFormsTextareaElement;
+    contentPayload: ContentPayload;
+    displaySettings: DisplaySettingsFragment[];
+    Label?: string;
+    Placeholder?: string;
+    Tooltip?: string;
+    PredefinedValue?: string;
+    Validators?: any;
+    AutoComplete?: string;
+}
+const { data, displaySettings } = Astro.props as Props;
+const {
+    Label,
+    Placeholder,
+    Tooltip,
+    PredefinedValue,
+    Validators,
+    AutoComplete,
+} = data;
+
+const isRequiredErrorMsg = requiredValidatorMsg(Validators);
+const isRegExpErrorMsg = regExpValidatorMsg(Validators);
+
+const regularExpressionValue = getRegularExpression(Validators);
+
+// Generate a unique ID for the input
+const inputId = `textarea-${Label?.replace(/\s+/g, '-')}-${Math.random().toString(36).substr(2, 4)}`;
+---
+
+<!-- <h1>Textarea element!</h1> -->
+<label class="validator text-lg font-semibold" for={inputId}>{Label}</label>
+<textarea
+    id={inputId}
+    name={inputId}
+    class="textarea h-24 w-full"
+    placeholder={Placeholder}
+    required={isRequiredErrorMsg ? true : false}
+    value={PredefinedValue}
+    autocomplete={AutoComplete || 'off'}
+    title={Tooltip}></textarea>

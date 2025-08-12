@@ -1,0 +1,17 @@
+# fragment AllComponents on _IComponent {
+#     ...AllComponentsExceptGrid
+#     ...Grid # Grid needs to be separated from the rest of the components because of ContentArea and recursive rendering
+# }
+
+fragment AllFormComponents on _IComponent {
+    ...formContainerData
+    ...choiceElement
+    ...numberElement
+    ...rangeElement
+    ...resetElement
+    ...selectionElement
+    ...submitElement
+    ...textareaElement
+    ...textboxElement
+    ...urlElement
+}

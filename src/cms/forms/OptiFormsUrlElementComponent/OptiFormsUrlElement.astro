@@ -1,0 +1,52 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OptiFormsUrlElement,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import {
+    requiredValidatorMsg,
+    regExpValidatorMsg,
+    getRegularExpression,
+} from '../formHelper';
+
+// https://daisyui.com/components/input/
+//// Style ideas:
+// Show icon
+
+export interface Props {
+    data: OptiFormsUrlElement;
+    contentPayload: ContentPayload;
+    displaySettings: DisplaySettingsFragment[];
+    Label?: string;
+    Placeholder?: string;
+    Tooltip?: string;
+    PredefinedValue?: string;
+    Validators?: any;
+}
+const { data, displaySettings } = Astro.props as Props;
+const { Label, Placeholder, Tooltip, PredefinedValue, Validators } = data;
+
+const isRequiredErrorMsg = requiredValidatorMsg(Validators);
+const isRegExpErrorMsg = regExpValidatorMsg(Validators);
+
+const regularExpressionValue = isRegExpErrorMsg
+    ? getRegularExpression(Validators)
+    : undefined;
+
+const inputId = `url-${Label?.replace(/\s+/g, '-')}-${Math.random().toString(36).substr(2, 4)}`;
+---
+
+<label class="validator text-lg font-semibold" for={inputId}>{Label}</label>
+<input
+    id={inputId}
+    name={inputId}
+    type="url"
+    class="input w-full"
+    required={isRequiredErrorMsg ? true : false}
+    placeholder={Placeholder}
+    value={PredefinedValue}
+    pattern={regularExpressionValue ||
+        '^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9-].*[a-zA-Z0-9])?.)+[a-zA-Z].*$'}
+    title={Tooltip}
+/>
