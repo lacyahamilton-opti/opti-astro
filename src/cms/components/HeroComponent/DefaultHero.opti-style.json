@@ -4,9 +4,28 @@
   "contentType": "Hero",
   "isDefault": true,
   "settings": {
+    "hoverEffect": {
+      "displayName": "Hover Effect",
+      "editor": "select",
+      "sortOrder": 1,
+      "choices": {
+        "zoom_subtle": {
+          "displayName": "Zoom (Subtle) (Default)",
+          "sortOrder": 10
+        },
+        "zoom": {
+          "displayName": "Zoom",
+          "sortOrder": 20
+        },
+        "none": {
+          "displayName": "None",
+          "sortOrder": 30
+        }
+      }
+    },
     "hero_height": {
       "displayName": "Hero Height",
-      "editor": "",
+      "editor": "select",
       "sortOrder": 20,
       "choices": {
         "h_18rem": {
@@ -29,7 +48,7 @@
     },
     "text_placement": {
       "displayName": "Text Placement",
-      "editor": "",
+      "editor": "select",
       "sortOrder": 30,
       "choices": {
         "center": {
@@ -48,22 +67,58 @@
     },
     "text_color": {
       "displayName": "Text Color",
-      "editor": "",
+      "editor": "select",
       "sortOrder": 40,
       "choices": {
+        "default": {
+          "displayName": "Default (Theme)",
+          "sortOrder": 10
+        },
         "white": {
           "displayName": "White",
-          "sortOrder": 40
+          "sortOrder": 20
         },
         "black": {
           "displayName": "Black",
+          "sortOrder": 30
+        },
+        "neutral": {
+          "displayName": "Neutral",
+          "sortOrder": 40
+        },
+        "primary": {
+          "displayName": "Primary",
           "sortOrder": 50
+        },
+        "secondary": {
+          "displayName": "Secondary",
+          "sortOrder": 60
+        },
+        "accent": {
+          "displayName": "Accent",
+          "sortOrder": 70
+        },
+        "info": {
+          "displayName": "Info",
+          "sortOrder": 80
+        },
+        "success": {
+          "displayName": "Success",
+          "sortOrder": 90
+        },
+        "warning": {
+          "displayName": "Warning",
+          "sortOrder": 100
+        },
+        "error": {
+          "displayName": "Error",
+          "sortOrder": 110
         }
       }
     },
     "background_tint_level": {
       "displayName": "Background Tint Level",
-      "editor": "",
+      "editor": "select",
       "sortOrder": 60,
       "choices": {
         "o_0": {
@@ -114,7 +169,7 @@
     },
 	"backgroundColor": {
 		"displayName": "Hero Background Color",
-		"editor": "",
+		"editor": "select",
 		"sortOrder": 70,
 		"choices": {
 			"transparent": {
@@ -169,7 +224,7 @@
 	},
     "image_fit": {
       "displayName": "Image Fit",
-      "editor": "",
+      "editor": "select",
       "sortOrder": 80,
       "choices": {
         "object_cover": {
@@ -188,7 +243,7 @@
     },
 		"buttonStyle": {
 			"displayName": "Button Style",
-			"editor": "",
+			"editor": "select",
 			"sortOrder": 120,
 			"choices": {
 				"standard": {
@@ -231,7 +286,7 @@
 		},
 		"buttonWidth": {
 			"displayName": "Button Width",
-			"editor": "",
+			"editor": "select",
 			"sortOrder": 130,
 			"choices": {
 				"w_10rem": {
@@ -278,7 +333,7 @@
 		},
 		"buttonSize": {
 			"displayName": "Button Size",
-			"editor": "",
+			"editor": "select",
 			"sortOrder": 130,
 			"choices": {
 				"medium": {
@@ -309,7 +364,7 @@
 		},
 		"buttonRadius": {
 			"displayName": "Rounded Buttons",
-			"editor": "",
+			"editor": "select",
 			"sortOrder": 150,
 			"choices": {
 				"none": {
@@ -356,7 +411,7 @@
 		},
 		"buttonAction": {
 			"displayName": "Bouncy Buttons",
-			"editor": "",
+			"editor": "select",
 			"sortOrder": 160,
 			"choices": {
 				"static": {

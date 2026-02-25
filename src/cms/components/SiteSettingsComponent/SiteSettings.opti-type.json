@@ -1,7 +1,7 @@
 {
 	"key": "SiteSettings",
 	"displayName": "Site Settings",
-	"description": "",
+	"description": "Manages global site settings: branding, analytics, and general configurations.",
 	"baseType": "component",
 	"sortOrder": 0,
 	"mayContainTypes": [],
@@ -128,6 +128,33 @@
 			"sortOrder": 50,
 			"indexingType": "searchable",
 			"editorSettings": {}
+		},
+		"TopNavStyle": {
+			"type": "string",
+			"format": "selectOne",
+			"displayName": "Top Nav Display Style",
+			"description": "Style to display the top navigation menu",
+			"localized": false,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 50,
+			"editorSettings": {},
+			"enum": {
+				"values": [
+					{
+						"displayName": "Standard (Default)",
+						"value": "standard"
+					},
+					{
+						"displayName": "Drawer (Left)",
+						"value": "drawer-left"
+					},
+					{
+						"displayName": "Drawer (Right)",
+						"value": "drawer-right"
+					}
+				]
+			}
 		},
 		"HeaderLinks": {
 			"type": "array",

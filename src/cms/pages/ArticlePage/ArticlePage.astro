@@ -39,6 +39,8 @@ const graphType = post?.SeoSettings?.GraphType && post?.SeoSettings?.GraphType !
 const defaultUrl = post?._metadata?.url?.default || '';
 const hierarchicalUrl = post?._metadata?.url?.type === "SIMPLE" ? post?._metadata?.url?.hierarchical : '';
 const extPreviewEnabled = post?.PageAdminSettings?.EnableExternalPreview ?? false;
+
+const pageClass = 'page-article';
 ---
 
 <Layout
@@ -51,7 +53,7 @@ const extPreviewEnabled = post?.PageAdminSettings?.EnableExternalPreview ?? fals
     hierarchicalUrl={hierarchicalUrl ?? ''}
     extPreviewEnabled={extPreviewEnabled}
 >
-    <div class="max-w-screen-6xl mx-auto">
+    <div class={`max-w-screen-6xl mx-auto ${pageClass}`}>
         <main class="mt-10">
             <div
                 class="relative mx-auto mb-4 w-full max-w-screen-xl md:mb-0 bg-base-200"
@@ -59,19 +61,19 @@ const extPreviewEnabled = post?.PageAdminSettings?.EnableExternalPreview ?? fals
             >
                 { ((post.PromoImage as any)?.item?.Url || post.PromoImage?.url?.default) && 
                     <div
-                        class="absolute bottom-0 left-0 z-10 h-full w-full"
+                        class="absolute bottom-0 start-0 z-10 h-full w-full"
                         style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"
                     >
                     </div>
                     <AstroImage
                         src={(post.PromoImage as any)?.item?.Url || post.PromoImage?.url?.default}
-                        class="absolute top-0 left-0 z-0 h-full w-full object-cover"
+                        class="absolute top-0 start-0 z-0 h-full w-full object-cover"
                         alt={(post.PromoImage as any)?.item?.AltText || (post.PromoImage as any)?.item?._metadata?.displayName || post.Heading || 'Article promo image'}
                         inferSize={true}
                         data-epi-edit={isCmsEdit ? "PromoImage" : undefined}
                     />
                 }
-                <div class="absolute bottom-0 left-0 z-20 p-4">
+                <div class="absolute bottom-0 start-0 z-20 p-4">
                     <h1
                         class={`text-4xl lg:text-6xl leading-tight font-semibold pb-4 ${articleHeaderFontColor}`}
                         data-epi-edit={isCmsEdit ? "Heading" : undefined}
@@ -102,7 +104,7 @@ const extPreviewEnabled = post?.PageAdminSettings?.EnableExternalPreview ?? fals
             </div>
             <article
                 class="prose dark:prose-invert md:prose-lg lg:prose-xl mx-auto mt-12 mb-12 max-w-screen-xl px-4 2xl:px-0 prose-img:rounded-[2rem] prose-img:p-4 "
-                data-epi-edit={isCmsEdit ? "BlogPostBody" : undefined}
+                data-epi-edit={isCmsEdit ? "Body" : undefined}
                 set:html={post.Body?.html}
             />
         </main>

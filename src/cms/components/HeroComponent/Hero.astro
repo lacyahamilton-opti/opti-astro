@@ -5,13 +5,16 @@ import type {
     HeroFragment,
 } from '../../../../__generated/sdk';
 import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
 import { getHeroStyles } from './HeroStyling';
 import { getGlobalStyles } from '../../shared/globalStylesHelper';
 import LinkButton from '../ButtonComponent/LinkButton.astro';
 import { getButtonStyles } from '../ButtonComponent/ButtonStyling';
-import { isEditContext } from '../../shared/utils.ts';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
 
 const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
 
 export interface Props {
     key: string;
@@ -31,11 +34,23 @@ const hasVideo = videoUrl !== null;
 const { justifyClass, backgroundOpacityClass, textClasses, heightClass, imageFitClass } =
     getHeroStyles(displaySettings);
 const globalStyles = getGlobalStyles(displaySettings);
+
+// Get hover effect settings
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const hoverEffect = dictionary['hoverEffect'] || 'zoom_subtle';
+
+// Build hover effect classes
+const hoverClasses = {
+    'transition-transform duration-300 hover:scale-105 overflow-hidden': hoverEffect === 'zoom',
+    'transition-transform duration-300 hover:scale-[1.02] overflow-hidden': hoverEffect === 'zoom_subtle',
+};
+
+const componentClass = 'component-hero';
 ---
 
 <section
     class="relative flex w-full items-center"
-    class:list={[justifyClass, heightClass, globalStyles]}
+    class:list={[justifyClass, heightClass, globalStyles, hoverClasses, componentClass]}
     data-epi-block-id={isCmsEdit && key || undefined}    
 >
     {
@@ -71,12 +86,13 @@ const globalStyles = getGlobalStyles(displaySettings);
 
     <!-- Content -->
     <div class="relative z-10 px-6" class:list={textClasses}>
-        <h1 class="text-5xl font-bold md:text-6xl">{data?.Heading}</h1>
-        <p class="mx-auto mt-4 text-xl">
+        <h1 class="text-5xl font-bold md:text-6xl" class:list={textClasses}>{data?.Heading}</h1>
+        <p class="mx-auto mt-4 text-xl" class:list={textClasses}>
             {data?.SubHeading}
         </p>
         <p
-            class="mx-auto mt-4 max-w-2xl text-base text-base-content opacity-80"
+            class="mx-auto mt-4 max-w-2xl text-base opacity-80"
+            class:list={textClasses}
             set:html={data.Body?.html}
         />
 
@@ -84,6 +100,8 @@ const globalStyles = getGlobalStyles(displaySettings);
         <div class="mt-6 flex space-x-4" class:list={justifyClass}>
             {
                 data?.Links?.map((link, i) => {
+                    const buttonLink = getLink(link as ButtonLinkData, currentDomain);
+                    const newWindow = link?.target === '_blank';
                     const buttonType: string[] = [""];
                     switch (i) {
                         case 0:
@@ -106,7 +124,7 @@ const globalStyles = getGlobalStyles(displaySettings);
                             break;
                     }
                     return (
-                        <LinkButton cssClasses={[buttonType, heroButtonStyles]} link={link?.url?.default}>{link?.text}</LinkButton>
+                        <LinkButton cssClasses={[buttonType, heroButtonStyles]} link={buttonLink} newWindow={newWindow}>{link?.text}</LinkButton>
                     );
                 })
             }

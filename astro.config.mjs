@@ -1,14 +1,18 @@
 // @ts-check
+import alpinejs from '@astrojs/alpinejs';
+import svelte from '@astrojs/svelte';
+import tailwindcss from '@tailwindcss/vite';
+import { adapter } from 'astro-auto-adapter';
 import { defineConfig, envField, fontProviders } from 'astro/config';
 import mkcert from 'vite-plugin-mkcert';
 
-import node from '@astrojs/node';
-import { adapter } from "astro-auto-adapter";
-
-import alpinejs from '@astrojs/alpinejs';
-import tailwindcss from '@tailwindcss/vite';
+import { loadI18nConfig } from './src/config/i18n.config.ts';
 
 const multiAdapter = await adapter();
+
+// Load i18n configuration (with optional environment variable override)
+// This happens at build time only, not at runtime
+const i18nConfig = loadI18nConfig();
 
 // https://astro.build/config
 export default defineConfig({
@@ -30,23 +34,8 @@ export default defineConfig({
         ],
     },
 
-    i18n: {
-        locales: [
-        // DYNAMIC_LOCALES_START
-       'en' 
-        // DYNAMIC_LOCALES_END
-        ],
-        defaultLocale: 'en',
-        routing: {
-            prefixDefaultLocale: false,
-            fallbackType: 'rewrite',
-        },
-        fallback: {
-            // DYNAMIC_FALLBACK_START
-            
-            // DYNAMIC_FALLBACK_END
-        },
-    },
+    // @ts-ignore - Astro's type definitions don't properly handle dynamic fallback configurations
+    i18n: i18nConfig,
 
     output: 'server',
 
@@ -56,10 +45,11 @@ export default defineConfig({
     vite: {
         ssr: {
             noExternal: ['graphql', 'graphql-request'],
+            external: ['vite'],
         },
         plugins: [mkcert(), tailwindcss()],
     },
-    integrations: [alpinejs()],
+    integrations: [alpinejs(), svelte()],
 
     env: {
         schema: {
@@ -94,6 +84,17 @@ export default defineConfig({
                 optional: true,
                 default: 0,
             }),
+            OPTIMIZELY_DATA_PLATFORM_ENDPOINT: envField.string({
+                context: 'server',
+                access: 'secret',
+                optional: true,
+                default: "https://api.zaius.com"
+            }),
+            OPTIMIZELY_DATA_PLATFORM_PRIVATE_KEY: envField.string({
+                context: 'server',
+                access: 'secret',
+                optional: true,
+            }),
             EXTERNAL_PREVIEW_ENABLED: envField.boolean({
                 context: 'server',
                 access: 'public',
@@ -111,266 +112,274 @@ export default defineConfig({
                 optional: true,
                 default: false,
             }),
+            ASTRO_TRANSITIONS_ENABLED: envField.boolean({
+                context: 'client',
+                access: 'public',
+                optional: true,
+                default: true,
+            }),
+            // Note: ASTRO_I18N_CONFIG is a build-time only variable (used in astro.config.mjs)
+            // It's not included in the env schema since it's not needed at runtime
         },
     },
-    
+
     experimental: {
         fonts: [
             {
                 provider: fontProviders.google(),
-                name: "Alegreya",
-                cssVariable: "--font-alegreya"
+                name: 'Alegreya',
+                cssVariable: '--font-alegreya',
             },
             {
                 provider: fontProviders.google(),
-                name: "Alegreya Sans",
-                cssVariable: "--font-alegreya-sans"
+                name: 'Alegreya Sans',
+                cssVariable: '--font-alegreya-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "Archivo Narrow",
-                cssVariable: "--font-archivo-narrow"
+                name: 'Archivo Narrow',
+                cssVariable: '--font-archivo-narrow',
             },
             {
                 provider: fontProviders.google(),
-                name: "BioRhyme",
-                cssVariable: "--font-biorhyme"
+                name: 'BioRhyme',
+                cssVariable: '--font-biorhyme',
             },
             {
                 provider: fontProviders.google(),
-                name: "Cardo",
-                cssVariable: "--font-cardo"
+                name: 'Cardo',
+                cssVariable: '--font-cardo',
             },
             {
                 provider: fontProviders.google(),
-                name: "Chivo",
-                cssVariable: "--font-chivo"
+                name: 'Chivo',
+                cssVariable: '--font-chivo',
             },
             {
                 provider: fontProviders.google(),
-                name: "Cormorant",
-                cssVariable: "--font-cormorant"
+                name: 'Cormorant',
+                cssVariable: '--font-cormorant',
             },
             {
                 provider: fontProviders.google(),
-                name: "Crimson Text",
-                cssVariable: "--font-crimson-text"
+                name: 'Crimson Text',
+                cssVariable: '--font-crimson-text',
             },
             {
                 provider: fontProviders.google(),
-                name: "DM Sans",
-                cssVariable: "--font-dm-sans"
+                name: 'DM Sans',
+                cssVariable: '--font-dm-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "Eczar",
-                cssVariable: "--font-eczar"
+                name: 'Eczar',
+                cssVariable: '--font-eczar',
             },
             {
                 provider: fontProviders.google(),
-                name: "Fira Sans",
-                cssVariable: "--font-fira-sans"
+                name: 'Fira Sans',
+                cssVariable: '--font-fira-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "Fraunces",
-                cssVariable: "--font-fraunces"
+                name: 'Fraunces',
+                cssVariable: '--font-fraunces',
             },
             {
                 provider: fontProviders.google(),
-                name: "Heebo",
-                cssVariable: "--font-heebo"
+                name: 'Heebo',
+                cssVariable: '--font-heebo',
             },
             {
                 provider: fontProviders.google(),
-                name: "IBM Plex Sans",
-                cssVariable: "--font-ibm-plex-sans"
+                name: 'IBM Plex Sans',
+                cssVariable: '--font-ibm-plex-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "IBM Plex Serif",
-                cssVariable: "--font-ibm-plex-serif"
+                name: 'IBM Plex Serif',
+                cssVariable: '--font-ibm-plex-serif',
             },
             {
                 provider: fontProviders.google(),
-                name: "Inconsolata",
-                cssVariable: "--font-inconsolata"
+                name: 'Inconsolata',
+                cssVariable: '--font-inconsolata',
             },
             {
                 provider: fontProviders.google(),
-                name: "Inknut Antiqua",
-                cssVariable: "--font-inknut-antiqua"
+                name: 'Inknut Antiqua',
+                cssVariable: '--font-inknut-antiqua',
             },
             {
                 provider: fontProviders.google(),
-                name: "Inter",
-                cssVariable: "--font-inter"
+                name: 'Inter',
+                cssVariable: '--font-inter',
             },
             {
                 provider: fontProviders.google(),
-                name: "Karla",
-                cssVariable: "--font-karla"
+                name: 'Karla',
+                cssVariable: '--font-karla',
             },
             {
                 provider: fontProviders.google(),
-                name: "Lato",
-                cssVariable: "--font-lato"
+                name: 'Lato',
+                cssVariable: '--font-lato',
             },
             {
                 provider: fontProviders.google(),
-                name: "Libre Baskerville",
-                cssVariable: "--font-libre-baskerville"
+                name: 'Libre Baskerville',
+                cssVariable: '--font-libre-baskerville',
             },
             {
                 provider: fontProviders.google(),
-                name: "Libre Franklin",
-                cssVariable: "--font-libre-franklin"
+                name: 'Libre Franklin',
+                cssVariable: '--font-libre-franklin',
             },
             {
                 provider: fontProviders.google(),
-                name: "Lora",
-                cssVariable: "--font-lora"
+                name: 'Lora',
+                cssVariable: '--font-lora',
             },
             {
                 provider: fontProviders.google(),
-                name: "Manrope",
-                cssVariable: "--font-manrope"
+                name: 'Manrope',
+                cssVariable: '--font-manrope',
             },
             {
                 provider: fontProviders.google(),
-                name: "Merriweather",
-                cssVariable: "--font-merriweather"
+                name: 'Merriweather',
+                cssVariable: '--font-merriweather',
             },
             {
                 provider: fontProviders.google(),
-                name: "Montserrat",
-                cssVariable: "--font-montserrat"
+                name: 'Montserrat',
+                cssVariable: '--font-montserrat',
             },
             {
                 provider: fontProviders.google(),
-                name: "Neuton",
-                cssVariable: "--font-neuton"
+                name: 'Neuton',
+                cssVariable: '--font-neuton',
             },
             {
                 provider: fontProviders.google(),
-                name: "Nunito",
-                cssVariable: "--font-nunito"
+                name: 'Nunito',
+                cssVariable: '--font-nunito',
             },
             {
                 provider: fontProviders.google(),
-                name: "Open Sans",
-                cssVariable: "--font-open-sans"
+                name: 'Open Sans',
+                cssVariable: '--font-open-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "Oswald",
-                cssVariable: "--font-oswald"
+                name: 'Oswald',
+                cssVariable: '--font-oswald',
             },
             {
                 provider: fontProviders.google(),
-                name: "Outfit",
-                cssVariable: "--font-outfit"
+                name: 'Outfit',
+                cssVariable: '--font-outfit',
             },
             {
                 provider: fontProviders.google(),
-                name: "Playfair Display",
-                cssVariable: "--font-playfair-display"
+                name: 'Playfair Display',
+                cssVariable: '--font-playfair-display',
             },
             {
                 provider: fontProviders.google(),
-                name: "Plus Jakarta Sans",
-                cssVariable: "--font-plus-jakarta-sans"
+                name: 'Plus Jakarta Sans',
+                cssVariable: '--font-plus-jakarta-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "Poppins",
-                cssVariable: "--font-poppins"
+                name: 'Poppins',
+                cssVariable: '--font-poppins',
             },
             {
                 provider: fontProviders.google(),
-                name: "Proza Libre",
-                cssVariable: "--font-proza-libre"
+                name: 'Proza Libre',
+                cssVariable: '--font-proza-libre',
             },
             {
                 provider: fontProviders.google(),
-                name: "PT Sans",
-                cssVariable: "--font-pt-sans"
+                name: 'PT Sans',
+                cssVariable: '--font-pt-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "PT Serif",
-                cssVariable: "--font-pt-serif"
+                name: 'PT Serif',
+                cssVariable: '--font-pt-serif',
             },
             {
                 provider: fontProviders.google(),
-                name: "Public Sans",
-                cssVariable: "--font-public-sans"
+                name: 'Public Sans',
+                cssVariable: '--font-public-sans',
             },
             {
                 provider: fontProviders.google(),
-                name: "Quicksand",
-                cssVariable: "--font-quicksand"
+                name: 'Quicksand',
+                cssVariable: '--font-quicksand',
             },
             {
                 provider: fontProviders.google(),
-                name: "Raleway",
-                cssVariable: "--font-raleway"
+                name: 'Raleway',
+                cssVariable: '--font-raleway',
             },
             {
                 provider: fontProviders.google(),
-                name: "Roboto",
-                cssVariable: "--font-roboto"
+                name: 'Roboto',
+                cssVariable: '--font-roboto',
             },
             {
                 provider: fontProviders.google(),
-                name: "Roboto Mono",
-                cssVariable: "--font-roboto-mono"
+                name: 'Roboto Mono',
+                cssVariable: '--font-roboto-mono',
             },
             {
                 provider: fontProviders.google(),
-                name: "Rubik",
-                cssVariable: "--font-rubik"
+                name: 'Rubik',
+                cssVariable: '--font-rubik',
             },
             {
                 provider: fontProviders.google(),
-                name: "Source Sans 3",
-                cssVariable: "--font-source-sans-3"
+                name: 'Source Sans 3',
+                cssVariable: '--font-source-sans-3',
             },
             {
                 provider: fontProviders.google(),
-                name: "Source Serif 4",
-                cssVariable: "--font-source-serif-4"
+                name: 'Source Serif 4',
+                cssVariable: '--font-source-serif-4',
             },
             {
                 provider: fontProviders.google(),
-                name: "Space Grotesk",
-                cssVariable: "--font-space-grotesk"
+                name: 'Space Grotesk',
+                cssVariable: '--font-space-grotesk',
             },
             {
                 provider: fontProviders.google(),
-                name: "Space Mono",
-                cssVariable: "--font-space-mono"
+                name: 'Space Mono',
+                cssVariable: '--font-space-mono',
             },
             {
                 provider: fontProviders.google(),
-                name: "Spectral",
-                cssVariable: "--font-spectral"
+                name: 'Spectral',
+                cssVariable: '--font-spectral',
             },
             {
                 provider: fontProviders.google(),
-                name: "Syne",
-                cssVariable: "--font-syne"
+                name: 'Syne',
+                cssVariable: '--font-syne',
             },
             {
                 provider: fontProviders.google(),
-                name: "Urbanist",
-                cssVariable: "--font-urbanist"
+                name: 'Urbanist',
+                cssVariable: '--font-urbanist',
             },
             {
                 provider: fontProviders.google(),
-                name: "Work Sans",
-                cssVariable: "--font-work-sans"
-            }
-        ]
+                name: 'Work Sans',
+                cssVariable: '--font-work-sans',
+            },
+        ],
     },
 });

@@ -1,7 +1,7 @@
 {
 	"key": "Card",
 	"displayName": "Card",
-	"description": "",
+	"description": "Versatile card for rich info: heading, text, image, links, and various display layouts.",
 	"baseType": "component",
 	"sortOrder": 0,
 	"mayContainTypes": [],
@@ -72,6 +72,10 @@
 					{
 						"displayName": "Text On Right",
 						"value": "textOnRight"
+					},
+					{
+						"displayName": "Hover Overlay",
+						"value": "hover"
 					}
 				]
 			}

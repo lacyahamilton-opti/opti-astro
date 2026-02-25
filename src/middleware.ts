@@ -1,22 +1,40 @@
 import { defineMiddleware } from 'astro:middleware';
-import { getOptimizelySdk } from './graphql/getSdk';
 import { Locales } from '../__generated/sdk';
+import { getOptimizelySdk } from './graphql/getSdk';
 import type { ContentPayload } from './graphql/shared/ContentPayload';
+import { localeToSdkLocale } from './lib/locale-helpers';
+import { checkAdminAuth } from './pages/opti-admin/auth-opti-admin';
+import { checkRedirects } from './lib/redirect-utils';
 
 // Cache for placeholder data to avoid repeated GraphQL calls
 const placeholderCache = new Map<string, Map<string, string>>();
 const CACHE_DURATION = 60000; // 1 minute
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // Check if this is an admin route
+  if (context.url.pathname.startsWith('/opti-admin')) {
+    const authError = checkAdminAuth(context.request);
+    if (authError) {
+      return authError;
+    }
+  }
+
+  // Check for redirects
+  const redirectResponse = checkRedirects(context.url.pathname);
+  if (redirectResponse) {
+    return redirectResponse;
+  }
+
   const response = await next();
   
   // Only process HTML responses
   if (response.headers.get('content-type')?.includes('text/html')) {
     const html = await response.text();
-    
+
     // Extract domain from URL
     const domain = context.url.host;
-    const locale = context.currentLocale as Locales || Locales.En;
+    // Use Astro's current locale
+    const locale = localeToSdkLocale(context.currentLocale) as Locales;
     
     try {
       // Get placeholders from GraphQL
