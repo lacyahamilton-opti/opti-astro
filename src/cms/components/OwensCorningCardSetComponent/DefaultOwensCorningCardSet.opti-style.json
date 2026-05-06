@@ -1,0 +1,23 @@
+{
+	"key": "DefaultOwensCorningCardSet",
+	"displayName": "Owens Corning Card Set - Default",
+	"contentType": "OwensCorningCardSet",
+	"isDefault": true,
+	"settings": {
+		"background": {
+			"displayName": "Background",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"white": {
+					"displayName": "White (Default)",
+					"sortOrder": 10
+				},
+				"gray": {
+					"displayName": "Light Gray",
+					"sortOrder": 20
+				}
+			}
+		}
+	}
+}

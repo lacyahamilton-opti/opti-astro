@@ -1,0 +1,39 @@
+{
+	"key": "OwensCorningFooterColumn",
+	"displayName": "Owens Corning - Footer Column",
+	"description": "Footer link column with a title and a list of links.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"elementEnabled"
+	],
+	"properties": {
+		"Title": {
+			"type": "string",
+			"displayName": "Column Title",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Links": {
+			"type": "array",
+			"format": "LinkCollection",
+			"displayName": "Links",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {},
+			"items": {
+				"type": "link"
+			}
+		}
+	}
+}

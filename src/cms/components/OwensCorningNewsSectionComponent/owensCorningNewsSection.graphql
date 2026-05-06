@@ -1,0 +1,16 @@
+fragment OwensCorningNewsSection on OwensCorningNewsSection {
+    Heading
+    MoreLink {
+        ...LinkUrl
+    }
+    Items {
+        Prehead
+        Title
+        Body {
+            html
+        }
+        Link {
+            ...LinkUrl
+        }
+    }
+}

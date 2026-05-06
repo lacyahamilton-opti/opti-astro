@@ -1,0 +1,65 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningFooterColumnFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningFooterColumnFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data } = Astro.props as Props;
+
+const componentClass = 'component-oc-footer-column';
+---
+
+<div
+    class:list={[componentClass]}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    {
+        data.Title && (
+            <h3 class="mb-4 border-b border-white/10 pb-2 font-['Oswald',sans-serif] text-sm font-semibold uppercase tracking-widest text-white">
+                {data.Title}
+            </h3>
+        )
+    }
+    {
+        data.Links && data.Links.length > 0 && (
+            <ul class="flex list-none flex-col gap-2">
+                {data.Links.map((link) => {
+                    const href = getLink(
+                        link as ButtonLinkData,
+                        currentDomain,
+                    );
+                    const newWindow = link?.target === '_blank';
+                    return (
+                        <li>
+                            <a
+                                class="text-[0.8125rem] text-white/55 transition-colors hover:text-white"
+                                href={href}
+                                target={newWindow ? '_blank' : undefined}
+                                rel={
+                                    newWindow
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                }
+                            >
+                                {link?.text}
+                            </a>
+                        </li>
+                    );
+                })}
+            </ul>
+        )
+    }
+</div>

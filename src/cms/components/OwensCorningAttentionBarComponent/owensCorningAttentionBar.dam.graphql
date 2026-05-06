@@ -1,0 +1,6 @@
+fragment OwensCorningAttentionBar on OwensCorningAttentionBar {
+    Heading
+    Ctas {
+        ...LinkCollection
+    }
+}

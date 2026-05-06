@@ -1,0 +1,49 @@
+{
+	"key": "OwensCorningNewsSection",
+	"displayName": "Owens Corning - News Section",
+	"description": "Gray-bg news section with heading, optional 'More News' link, and a 3-column grid of news items.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled"
+	],
+	"properties": {
+		"Heading": {
+			"type": "string",
+			"displayName": "Heading",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"MoreLink": {
+			"type": "link",
+			"displayName": "More Link",
+			"description": "Optional 'More News' link displayed in the section header.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {}
+		},
+		"Items": {
+			"type": "array",
+			"displayName": "News Items",
+			"description": "News cards (3 per row on desktop).",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 30,
+			"editorSettings": {},
+			"items": {
+				"type": "component",
+				"contentType": "OwensCorningNewsItem"
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+fragment OwensCorningSocialLink on OwensCorningSocialLink {
+    Platform
+    Url {
+        default
+    }
+}

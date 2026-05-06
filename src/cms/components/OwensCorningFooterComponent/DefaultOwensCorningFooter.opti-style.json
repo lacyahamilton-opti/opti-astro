@@ -1,0 +1,19 @@
+{
+	"key": "DefaultOwensCorningFooter",
+	"displayName": "Owens Corning Footer - Default",
+	"contentType": "OwensCorningFooter",
+	"isDefault": true,
+	"settings": {
+		"variant": {
+			"displayName": "Variant",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"default": {
+					"displayName": "Default (Dark)",
+					"sortOrder": 10
+				}
+			}
+		}
+	}
+}

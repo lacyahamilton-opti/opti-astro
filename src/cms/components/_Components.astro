@@ -20,6 +20,17 @@ import Text from './TextComponent/Text.astro';
 import Video from './VideoComponent/Video.astro';
 import VideoExternal from './VideoExternalComponent/VideoExternal.astro';
 import OptiForm from '../forms/base/OptiFormsContainerDataComponent/OptiForm.astro';
+import OwensCorningHero from './OwensCorningHeroComponent/OwensCorningHero.astro';
+import OwensCorningCard from './OwensCorningCardComponent/OwensCorningCard.astro';
+import OwensCorningCardSet from './OwensCorningCardSetComponent/OwensCorningCardSet.astro';
+import OwensCorningQuickLink from './OwensCorningQuickLinkComponent/OwensCorningQuickLink.astro';
+import OwensCorningQuickLinks from './OwensCorningQuickLinksComponent/OwensCorningQuickLinks.astro';
+import OwensCorningAttentionBar from './OwensCorningAttentionBarComponent/OwensCorningAttentionBar.astro';
+import OwensCorningNewsItem from './OwensCorningNewsItemComponent/OwensCorningNewsItem.astro';
+import OwensCorningNewsSection from './OwensCorningNewsSectionComponent/OwensCorningNewsSection.astro';
+import OwensCorningFooterColumn from './OwensCorningFooterColumnComponent/OwensCorningFooterColumn.astro';
+import OwensCorningSocialLink from './OwensCorningSocialLinkComponent/OwensCorningSocialLink.astro';
+import OwensCorningFooter from './OwensCorningFooterComponent/OwensCorningFooter.astro';
 
 interface Props {
     contentPayload: ContentPayload;
@@ -237,5 +248,137 @@ const componentType = component._metadata.types[0];
 {
     componentType === 'OptiFormsContainerData' && (
         <OptiForm contentPayload={contentPayload} grid={component} />
+    )
+}
+
+{
+    componentType === 'OwensCorningHero' && (
+        <OwensCorningHero
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningCard' && (
+        <OwensCorningCard
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningCardSet' && (
+        <OwensCorningCardSet
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningQuickLink' && (
+        <OwensCorningQuickLink
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningQuickLinks' && (
+        <OwensCorningQuickLinks
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningAttentionBar' && (
+        <OwensCorningAttentionBar
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningNewsItem' && (
+        <OwensCorningNewsItem
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningNewsSection' && (
+        <OwensCorningNewsSection
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningFooterColumn' && (
+        <OwensCorningFooterColumn
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningSocialLink' && (
+        <OwensCorningSocialLink
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+
+{
+    componentType === 'OwensCorningFooter' && (
+        <OwensCorningFooter
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
     )
 }

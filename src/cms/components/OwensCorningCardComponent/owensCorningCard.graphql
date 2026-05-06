@@ -1,0 +1,12 @@
+fragment OwensCorningCard on OwensCorningCard {
+    Image {
+        ...ContentUrl
+    }
+    Heading
+    Body {
+        html
+    }
+    Link {
+        ...LinkUrl
+    }
+}

@@ -1,0 +1,39 @@
+{
+	"key": "OwensCorningQuickLinks",
+	"displayName": "Owens Corning - Quick Links",
+	"description": "Heading and 3-per-row grid of icon + label quick links.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled"
+	],
+	"properties": {
+		"Heading": {
+			"type": "string",
+			"displayName": "Heading",
+			"description": "Section heading rendered above the grid with a red underline accent.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Items": {
+			"type": "array",
+			"displayName": "Quick Links",
+			"description": "Quick link items (3 per row on desktop).",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {},
+			"items": {
+				"type": "component",
+				"contentType": "OwensCorningQuickLink"
+			}
+		}
+	}
+}

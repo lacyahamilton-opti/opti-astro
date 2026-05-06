@@ -1,0 +1,92 @@
+---
+import { Image as AstroImage } from 'astro:assets';
+import type {
+    DisplaySettingsFragment,
+    OwensCorningCardFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningCardFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings } = Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const openInNewTab =
+    dictionary['openInNewTab'] === 'true' ||
+    (data.Link as any)?.target === '_blank';
+
+const imageUrl =
+    (data.Image as any)?.item?.Url || data.Image?.url?.default || null;
+const imageAlt =
+    (data.Image as any)?.item?.AltText ||
+    (data.Image as any)?.item?._metadata?.displayName ||
+    data.Heading ||
+    '';
+
+const linkHref = data.Link
+    ? getLink(data.Link as ButtonLinkData, currentDomain)
+    : null;
+const linkText = (data.Link as any)?.text || 'Learn More';
+
+const componentClass = 'component-oc-card';
+---
+
+<article
+    class:list={[
+        'flex h-full flex-col border border-[#dddddd] bg-white',
+        componentClass,
+    ]}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    {
+        imageUrl && (
+            <AstroImage
+                src={imageUrl}
+                alt={imageAlt}
+                class="block aspect-[340/190] w-full object-cover"
+                inferSize
+            />
+        )
+    }
+    <div class="flex flex-1 flex-col p-5">
+        {
+            data.Heading && (
+                <h3 class="mb-3 font-['Oswald',sans-serif] text-[1.05rem] font-semibold uppercase leading-[1.25] text-[#333333]">
+                    {data.Heading}
+                </h3>
+            )
+        }
+        {
+            data.Body?.html && (
+                <div
+                    class="mb-4 flex-1 text-sm leading-[1.6] text-[#666666]"
+                    set:html={data.Body.html}
+                />
+            )
+        }
+        {
+            linkHref && (
+                <a
+                    class="inline-flex w-fit items-center gap-1.5 border-b border-[#c1241a] pb-px text-[0.8125rem] font-bold uppercase tracking-wider text-[#c1241a] transition-opacity hover:opacity-75"
+                    href={linkHref}
+                    target={openInNewTab ? '_blank' : undefined}
+                    rel={openInNewTab ? 'noopener noreferrer' : undefined}
+                >
+                    {linkText}
+                    <span aria-hidden="true">&rsaquo;</span>
+                </a>
+            )
+        }
+    </div>
+</article>

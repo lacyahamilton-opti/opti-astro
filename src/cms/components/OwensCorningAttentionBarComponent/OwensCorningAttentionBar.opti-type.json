@@ -1,0 +1,40 @@
+{
+	"key": "OwensCorningAttentionBar",
+	"displayName": "Owens Corning - Attention Bar",
+	"description": "Centered attention bar with a heading and a row of black-style CTA buttons (e.g. 'Find an Expert Near You').",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled",
+		"elementEnabled"
+	],
+	"properties": {
+		"Heading": {
+			"type": "string",
+			"displayName": "Heading",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Ctas": {
+			"type": "array",
+			"format": "LinkCollection",
+			"displayName": "CTA Buttons",
+			"description": "Row of black-style buttons.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {},
+			"items": {
+				"type": "link"
+			}
+		}
+	}
+}

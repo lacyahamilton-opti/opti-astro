@@ -1,0 +1,23 @@
+{
+	"key": "DefaultOwensCorningNewsItem",
+	"displayName": "Owens Corning News Item - Default",
+	"contentType": "OwensCorningNewsItem",
+	"isDefault": true,
+	"settings": {
+		"openInNewTab": {
+			"displayName": "Open Link in New Tab",
+			"editor": "checkbox",
+			"sortOrder": 10,
+			"choices": {
+				"true": {
+					"displayName": "Yes",
+					"sortOrder": 10
+				},
+				"false": {
+					"displayName": "No (Default)",
+					"sortOrder": 20
+				}
+			}
+		}
+	}
+}

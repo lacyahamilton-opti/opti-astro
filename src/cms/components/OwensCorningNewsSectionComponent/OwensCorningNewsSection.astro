@@ -1,0 +1,82 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningNewsSectionFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+import OwensCorningNewsItem from '../OwensCorningNewsItemComponent/OwensCorningNewsItem.astro';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningNewsSectionFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings, displayTemplateKey, contentPayload } =
+    Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const background = dictionary['background'] || 'gray';
+const bgClass = background === 'white' ? 'bg-white' : 'bg-[#f5f5f5]';
+
+const moreLinkHref = data.MoreLink
+    ? getLink(data.MoreLink as ButtonLinkData, currentDomain)
+    : null;
+const moreLinkText = (data.MoreLink as any)?.text || 'More News';
+const moreLinkNewWindow = (data.MoreLink as any)?.target === '_blank';
+
+const componentClass = 'component-oc-news-section';
+---
+
+<section
+    class:list={['px-6 py-12', bgClass, componentClass]}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    <div class="mx-auto max-w-[1280px]">
+        <div class="mb-8 flex items-center justify-between">
+            {
+                data.Heading && (
+                    <h2 class="font-['Oswald',sans-serif] text-2xl font-semibold uppercase text-[#333333]">
+                        {data.Heading}
+                    </h2>
+                )
+            }
+            {
+                moreLinkHref && (
+                    <a
+                        class="border-b border-[#c1241a] pb-px text-sm font-bold uppercase text-[#c1241a] transition-opacity hover:opacity-75"
+                        href={moreLinkHref}
+                        target={moreLinkNewWindow ? '_blank' : undefined}
+                        rel={
+                            moreLinkNewWindow
+                                ? 'noopener noreferrer'
+                                : undefined
+                        }
+                    >
+                        {moreLinkText}
+                    </a>
+                )
+            }
+        </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {
+                data.Items?.map((item) => (
+                    <OwensCorningNewsItem
+                        key=""
+                        data={item as any}
+                        displaySettings={[]}
+                        displayTemplateKey=""
+                        contentPayload={contentPayload}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</section>

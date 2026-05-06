@@ -1,0 +1,156 @@
+---
+import { Image as AstroImage } from 'astro:assets';
+import type {
+    DisplaySettingsFragment,
+    OwensCorningFooterFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+import OwensCorningFooterColumn from '../OwensCorningFooterColumnComponent/OwensCorningFooterColumn.astro';
+import OwensCorningSocialLink from '../OwensCorningSocialLinkComponent/OwensCorningSocialLink.astro';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningFooterFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, contentPayload } = Astro.props as Props;
+
+const logoUrl =
+    (data.LogoImage as any)?.item?.Url ||
+    data.LogoImage?.url?.default ||
+    null;
+const logoAlt =
+    (data.LogoImage as any)?.item?.AltText ||
+    (data.LogoImage as any)?.item?._metadata?.displayName ||
+    'Owens Corning';
+
+const componentClass = 'component-oc-footer';
+---
+
+<footer
+    class:list={['bg-[#1a1a1a] px-6 pt-12 text-white', componentClass]}
+    role="contentinfo"
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    <div class="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div>
+            {
+                logoUrl && (
+                    <div class="mb-5">
+                        <AstroImage
+                            src={logoUrl}
+                            alt={logoAlt}
+                            class="h-12 w-auto brightness-0 invert"
+                            inferSize
+                        />
+                    </div>
+                )
+            }
+            {
+                data.Tagline?.html && (
+                    <div
+                        class="mb-6 max-w-[280px] text-sm leading-[1.6] text-white/55"
+                        set:html={data.Tagline.html}
+                    />
+                )
+            }
+            {
+                data.SocialLinks && data.SocialLinks.length > 0 && (
+                    <div class="mt-2 flex flex-wrap gap-2.5">
+                        {data.SocialLinks.map((social) => (
+                            <OwensCorningSocialLink
+                                key=""
+                                data={social as any}
+                                displaySettings={[]}
+                                displayTemplateKey=""
+                                contentPayload={contentPayload}
+                            />
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+
+        {
+            data.Columns?.map((col) => (
+                <OwensCorningFooterColumn
+                    key=""
+                    data={col as any}
+                    displaySettings={[]}
+                    displayTemplateKey=""
+                    contentPayload={contentPayload}
+                />
+            ))
+        }
+    </div>
+
+    {
+        ((data.QuickLinksLeft && data.QuickLinksLeft.length > 0) ||
+            (data.QuickLinksRight && data.QuickLinksRight.length > 0)) && (
+            <div class="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-4 border-b border-white/10 py-5">
+                <div class="flex flex-wrap gap-6">
+                    {data.QuickLinksLeft?.map((link) => {
+                        const href = getLink(
+                            link as ButtonLinkData,
+                            currentDomain,
+                        );
+                        const newWindow = link?.target === '_blank';
+                        return (
+                            <a
+                                class="text-[0.8rem] text-white/50 transition-colors hover:text-white"
+                                href={href}
+                                target={newWindow ? '_blank' : undefined}
+                                rel={
+                                    newWindow
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                }
+                            >
+                                {link?.text}
+                            </a>
+                        );
+                    })}
+                </div>
+                <div class="flex flex-wrap gap-6">
+                    {data.QuickLinksRight?.map((link) => {
+                        const href = getLink(
+                            link as ButtonLinkData,
+                            currentDomain,
+                        );
+                        const newWindow = link?.target === '_blank';
+                        return (
+                            <a
+                                class="text-[0.8rem] text-white/50 transition-colors hover:text-white"
+                                href={href}
+                                target={newWindow ? '_blank' : undefined}
+                                rel={
+                                    newWindow
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                }
+                            >
+                                {link?.text}
+                            </a>
+                        );
+                    })}
+                </div>
+            </div>
+        )
+    }
+
+    {
+        data.CopyrightText?.html && (
+            <div
+                class="mx-auto max-w-[1280px] py-5 pb-8 text-xs leading-[1.5] text-white/35"
+                set:html={data.CopyrightText.html}
+            />
+        )
+    }
+</footer>

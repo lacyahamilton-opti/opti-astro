@@ -1,0 +1,19 @@
+{
+	"key": "DefaultOwensCorningFooterColumn",
+	"displayName": "Owens Corning Footer Column - Default",
+	"contentType": "OwensCorningFooterColumn",
+	"isDefault": true,
+	"settings": {
+		"variant": {
+			"displayName": "Variant",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"default": {
+					"displayName": "Default",
+					"sortOrder": 10
+				}
+			}
+		}
+	}
+}

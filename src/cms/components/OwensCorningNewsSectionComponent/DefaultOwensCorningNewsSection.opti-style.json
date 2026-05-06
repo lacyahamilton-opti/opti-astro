@@ -1,0 +1,23 @@
+{
+	"key": "DefaultOwensCorningNewsSection",
+	"displayName": "Owens Corning News Section - Default",
+	"contentType": "OwensCorningNewsSection",
+	"isDefault": true,
+	"settings": {
+		"background": {
+			"displayName": "Background",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"gray": {
+					"displayName": "Light Gray (Default)",
+					"sortOrder": 10
+				},
+				"white": {
+					"displayName": "White",
+					"sortOrder": 20
+				}
+			}
+		}
+	}
+}

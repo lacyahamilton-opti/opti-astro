@@ -1,0 +1,27 @@
+{
+	"key": "DefaultOwensCorningQuickLink",
+	"displayName": "Owens Corning Quick Link - Default",
+	"contentType": "OwensCorningQuickLink",
+	"isDefault": true,
+	"settings": {
+		"iconColor": {
+			"displayName": "Icon Color",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"pink": {
+					"displayName": "Pink (Default)",
+					"sortOrder": 10
+				},
+				"red": {
+					"displayName": "Red",
+					"sortOrder": 20
+				},
+				"black": {
+					"displayName": "Black",
+					"sortOrder": 30
+				}
+			}
+		}
+	}
+}

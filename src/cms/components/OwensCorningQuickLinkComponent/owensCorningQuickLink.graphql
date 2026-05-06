@@ -1,0 +1,7 @@
+fragment OwensCorningQuickLink on OwensCorningQuickLink {
+    IconClass
+    Label
+    Link {
+        ...LinkUrl
+    }
+}

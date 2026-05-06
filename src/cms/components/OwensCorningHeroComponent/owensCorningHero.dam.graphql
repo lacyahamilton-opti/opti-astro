@@ -1,0 +1,18 @@
+fragment OwensCorningHero on OwensCorningHero {
+    BackgroundImage {
+        ...ContentUrl
+        ...ContentReferenceItem
+    }
+    LogoImage {
+        ...ContentUrl
+        ...ContentReferenceItem
+    }
+    Heading
+    HighlightedHeading
+    Body {
+        html
+    }
+    Ctas {
+        ...LinkCollection
+    }
+}

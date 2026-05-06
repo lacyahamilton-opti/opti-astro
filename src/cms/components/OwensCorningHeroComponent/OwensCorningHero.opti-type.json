@@ -1,0 +1,90 @@
+{
+	"key": "OwensCorningHero",
+	"displayName": "Owens Corning - Hero",
+	"description": "Owens Corning branded hero with overlay image, two-part heading (regular + pink-highlighted), body copy, and CTA buttons.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled",
+		"elementEnabled"
+	],
+	"properties": {
+		"BackgroundImage": {
+			"type": "contentReference",
+			"displayName": "Background Image",
+			"description": "Full-bleed background image displayed behind the dark overlay.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"allowedTypes": [
+				"Image"
+			],
+			"restrictedTypes": []
+		},
+		"LogoImage": {
+			"type": "contentReference",
+			"displayName": "Logo Image (optional)",
+			"description": "Optional logo displayed above the heading. Will be rendered in white.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {},
+			"allowedTypes": [
+				"Image"
+			],
+			"restrictedTypes": []
+		},
+		"Heading": {
+			"type": "string",
+			"displayName": "Heading (white)",
+			"description": "First part of the heading, rendered in white. Use line breaks for multi-line layout.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 30,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"HighlightedHeading": {
+			"type": "string",
+			"displayName": "Highlighted Heading (pink)",
+			"description": "Trailing part of the heading rendered in brand pink. Use line breaks for multi-line layout.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 40,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Body": {
+			"type": "richText",
+			"displayName": "Body",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 50,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Ctas": {
+			"type": "array",
+			"format": "LinkCollection",
+			"displayName": "CTA Buttons",
+			"description": "Row of red CTA buttons rendered below the body copy.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 60,
+			"editorSettings": {},
+			"items": {
+				"type": "link"
+			}
+		}
+	}
+}

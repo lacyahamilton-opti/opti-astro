@@ -1,0 +1,67 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningQuickLinksFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext } from '../../shared/utils.ts';
+import OwensCorningQuickLink from '../OwensCorningQuickLinkComponent/OwensCorningQuickLink.astro';
+
+const isCmsEdit = isEditContext(Astro.url);
+
+export interface Props {
+    key: string;
+    data: OwensCorningQuickLinksFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings, displayTemplateKey, contentPayload } =
+    Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const columns = dictionary['columns'] || 'three';
+const colsClass =
+    columns === 'four'
+        ? 'lg:grid-cols-4'
+        : columns === 'two'
+          ? 'lg:grid-cols-2'
+          : 'lg:grid-cols-3';
+
+const componentClass = 'component-oc-quick-links';
+---
+
+<section
+    class:list={['bg-white px-6 py-12', componentClass]}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    <div class="mx-auto max-w-[1280px]">
+        {
+            data.Heading && (
+                <h2 class="mb-6 inline-block border-b-2 border-[#c1241a] pb-3 font-['Oswald',sans-serif] text-[1.1rem] font-semibold uppercase tracking-widest text-[#333333]">
+                    {data.Heading}
+                </h2>
+            )
+        }
+        <nav
+            class:list={[
+                'grid grid-cols-1 gap-4 md:grid-cols-2',
+                colsClass,
+            ]}
+            aria-label={data.Heading || 'Quick links'}
+        >
+            {
+                data.Items?.map((item) => (
+                    <OwensCorningQuickLink
+                        key=""
+                        data={item as any}
+                        displaySettings={[]}
+                        displayTemplateKey=""
+                        contentPayload={contentPayload}
+                    />
+                ))
+            }
+        </nav>
+    </div>
+</section>

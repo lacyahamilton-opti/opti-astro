@@ -1,0 +1,91 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningAttentionBarFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningAttentionBarFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings } = Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const background = dictionary['background'] || 'gray';
+const buttonStyle = dictionary['buttonStyle'] || 'black';
+
+const bgClass =
+    background === 'white'
+        ? 'bg-white border-y border-[#dddddd]'
+        : background === 'dark'
+          ? 'bg-[#1a1a1a] text-white'
+          : 'bg-[#f5f5f5] border-y border-[#dddddd]';
+
+const headingColor = background === 'dark' ? 'text-white' : 'text-[#333333]';
+
+const btnClass =
+    buttonStyle === 'red'
+        ? 'border-2 border-[#c1241a] bg-[#c1241a] text-white hover:bg-transparent hover:text-[#c1241a]'
+        : 'border-2 border-[#1a1a1a] bg-[#1a1a1a] text-white hover:bg-transparent hover:text-[#1a1a1a]';
+
+const componentClass = 'component-oc-attention-bar';
+---
+
+<div
+    class:list={['px-6 py-12 text-center', bgClass, componentClass]}
+    role="region"
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    {
+        data.Heading && (
+            <h2
+                class:list={[
+                    'mb-7 font-["Oswald",sans-serif] text-[clamp(1.5rem,2.5vw,2.25rem)] font-semibold uppercase',
+                    headingColor,
+                ]}
+            >
+                {data.Heading}
+            </h2>
+        )
+    }
+    {
+        data.Ctas && data.Ctas.length > 0 && (
+            <div class="flex flex-wrap justify-center gap-4">
+                {data.Ctas.map((link) => {
+                    const buttonLink = getLink(
+                        link as ButtonLinkData,
+                        currentDomain,
+                    );
+                    const newWindow = link?.target === '_blank';
+                    return (
+                        <a
+                            class:list={[
+                                'min-w-[160px] px-8 py-3 text-sm font-bold uppercase tracking-wider transition-colors',
+                                btnClass,
+                            ]}
+                            href={buttonLink}
+                            target={newWindow ? '_blank' : undefined}
+                            rel={
+                                newWindow
+                                    ? 'noopener noreferrer'
+                                    : undefined
+                            }
+                        >
+                            {link?.text}
+                        </a>
+                    );
+                })}
+            </div>
+        )
+    }
+</div>

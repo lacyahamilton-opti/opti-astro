@@ -1,0 +1,106 @@
+{
+	"key": "OwensCorningFooter",
+	"displayName": "Owens Corning - Footer",
+	"description": "Dark site footer with brand column, social links, link columns, quick links rows, and copyright.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled"
+	],
+	"properties": {
+		"LogoImage": {
+			"type": "contentReference",
+			"displayName": "Logo Image",
+			"description": "Footer logo, rendered in white.",
+			"localized": true,
+			"required": false,
+			"group": "Brand",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"allowedTypes": [
+				"Image"
+			],
+			"restrictedTypes": []
+		},
+		"Tagline": {
+			"type": "richText",
+			"displayName": "Tagline",
+			"description": "Short tagline displayed under the logo.",
+			"localized": true,
+			"required": false,
+			"group": "Brand",
+			"sortOrder": 20,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"SocialLinks": {
+			"type": "array",
+			"displayName": "Social Links",
+			"description": "Social media links shown under the tagline.",
+			"localized": true,
+			"required": false,
+			"group": "Brand",
+			"sortOrder": 30,
+			"editorSettings": {},
+			"items": {
+				"type": "component",
+				"contentType": "OwensCorningSocialLink"
+			}
+		},
+		"Columns": {
+			"type": "array",
+			"displayName": "Footer Columns",
+			"description": "Link columns (e.g. 'Our Products', 'Our Company', 'Contact Us').",
+			"localized": true,
+			"required": false,
+			"group": "Columns",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"items": {
+				"type": "component",
+				"contentType": "OwensCorningFooterColumn"
+			}
+		},
+		"QuickLinksLeft": {
+			"type": "array",
+			"format": "LinkCollection",
+			"displayName": "Quick Links - Left Group",
+			"description": "Small links on the left of the quick links row.",
+			"localized": true,
+			"required": false,
+			"group": "QuickLinks",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"items": {
+				"type": "link"
+			}
+		},
+		"QuickLinksRight": {
+			"type": "array",
+			"format": "LinkCollection",
+			"displayName": "Quick Links - Right Group",
+			"description": "Small links on the right of the quick links row.",
+			"localized": true,
+			"required": false,
+			"group": "QuickLinks",
+			"sortOrder": 20,
+			"editorSettings": {},
+			"items": {
+				"type": "link"
+			}
+		},
+		"CopyrightText": {
+			"type": "richText",
+			"displayName": "Copyright Text",
+			"description": "Copyright/legal text rendered at the bottom of the footer.",
+			"localized": true,
+			"required": false,
+			"group": "Legal",
+			"sortOrder": 10,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		}
+	}
+}

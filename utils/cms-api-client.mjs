@@ -99,9 +99,16 @@ export function createCmsApiClient(config) {
             async list() {
                 return request('GET', '/contenttypes');
             },
-            /** Create or update a content type by key (PATCH with merge semantics) */
+            /** Create or update a content type by key. PATCH for existing types, POST to create if 404. */
             async put(key, definition) {
-                return request('PATCH', `/contenttypes/${encodeURIComponent(key)}`, definition, 'application/merge-patch+json');
+                try {
+                    return await request('PATCH', `/contenttypes/${encodeURIComponent(key)}`, definition, 'application/merge-patch+json');
+                } catch (e) {
+                    if (typeof e?.message === 'string' && e.message.includes(' 404 ')) {
+                        return request('POST', '/contenttypes', definition, 'application/json');
+                    }
+                    throw e;
+                }
             },
         },
         displayTemplates: {
@@ -113,9 +120,16 @@ export function createCmsApiClient(config) {
             async get(key) {
                 return request('GET', `/displaytemplates/${encodeURIComponent(key)}`);
             },
-            /** Create or update a display template by key */
+            /** Create or update a display template by key. PATCH for existing, POST to create if 404. */
             async put(key, definition) {
-                return request('PATCH', `/displaytemplates/${encodeURIComponent(key)}`, definition, 'application/merge-patch+json');
+                try {
+                    return await request('PATCH', `/displaytemplates/${encodeURIComponent(key)}`, definition, 'application/merge-patch+json');
+                } catch (e) {
+                    if (typeof e?.message === 'string' && e.message.includes(' 404 ')) {
+                        return request('POST', '/displaytemplates', definition, 'application/json');
+                    }
+                    throw e;
+                }
             },
             /** Delete a display template by key */
             async delete(key) {

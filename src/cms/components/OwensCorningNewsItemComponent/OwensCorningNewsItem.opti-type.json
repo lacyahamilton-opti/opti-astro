@@ -1,0 +1,57 @@
+{
+	"key": "OwensCorningNewsItem",
+	"displayName": "Owens Corning - News Item",
+	"description": "Single news card with prehead, title, body, and CTA link.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"elementEnabled"
+	],
+	"properties": {
+		"Prehead": {
+			"type": "string",
+			"displayName": "Prehead",
+			"description": "Small uppercase eyebrow text shown above the title (rendered in red).",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Title": {
+			"type": "string",
+			"displayName": "Title",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Body": {
+			"type": "richText",
+			"displayName": "Body",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 30,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Link": {
+			"type": "link",
+			"displayName": "Link",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 40,
+			"editorSettings": {}
+		}
+	}
+}

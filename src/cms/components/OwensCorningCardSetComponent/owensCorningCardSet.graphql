@@ -1,0 +1,14 @@
+fragment OwensCorningCardSet on OwensCorningCardSet {
+    Cards {
+        Image {
+            ...ContentUrl
+        }
+        Heading
+        Body {
+            html
+        }
+        Link {
+            ...LinkUrl
+        }
+    }
+}

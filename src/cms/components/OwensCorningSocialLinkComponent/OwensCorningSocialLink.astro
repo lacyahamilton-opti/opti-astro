@@ -1,0 +1,56 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningSocialLinkFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { isEditContext } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+
+export interface Props {
+    key: string;
+    data: OwensCorningSocialLinkFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data } = Astro.props as Props;
+
+const platform = (data.Platform || '').toLowerCase();
+const platformLabels: Record<string, string> = {
+    facebook: 'Facebook',
+    twitter: 'Twitter',
+    youtube: 'YouTube',
+    linkedin: 'LinkedIn',
+    instagram: 'Instagram',
+    tiktok: 'TikTok',
+};
+const iconClassMap: Record<string, string> = {
+    facebook: 'fa fa-facebook',
+    twitter: 'fa fa-twitter',
+    youtube: 'fa fa-youtube',
+    linkedin: 'fa fa-linkedin',
+    instagram: 'fa fa-instagram',
+    tiktok: 'fa fa-music',
+};
+const label = platformLabels[platform] || data.Platform || 'Social link';
+const iconClass = iconClassMap[platform] || 'fa fa-link';
+const href = data.Url || '#';
+
+const componentClass = 'component-oc-social-link';
+---
+
+<a
+    class:list={[
+        'flex h-9 w-9 items-center justify-center border border-white/10 bg-white/[0.08] text-sm text-white/70 transition-colors hover:border-[#c1241a] hover:bg-[#c1241a] hover:text-white',
+        componentClass,
+    ]}
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={label}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    <i class={iconClass} aria-hidden="true"></i>
+</a>

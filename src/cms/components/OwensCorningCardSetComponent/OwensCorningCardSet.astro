@@ -1,0 +1,49 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningCardSetFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext } from '../../shared/utils.ts';
+import OwensCorningCard from '../OwensCorningCardComponent/OwensCorningCard.astro';
+
+const isCmsEdit = isEditContext(Astro.url);
+
+export interface Props {
+    key: string;
+    data: OwensCorningCardSetFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings, displayTemplateKey, contentPayload } =
+    Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const bg = dictionary['background'] || 'white';
+const bgClass = bg === 'gray' ? 'bg-[#f5f5f5]' : 'bg-white';
+
+const componentClass = 'component-oc-card-set';
+---
+
+<section
+    class:list={['px-6 py-12', bgClass, componentClass]}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    <div class="mx-auto max-w-[1280px]">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {
+                data.Cards?.map((card) => (
+                    <OwensCorningCard
+                        key=""
+                        data={card as any}
+                        displaySettings={[]}
+                        displayTemplateKey=""
+                        contentPayload={contentPayload}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</section>

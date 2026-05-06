@@ -1,0 +1,27 @@
+{
+	"key": "DefaultOwensCorningQuickLinks",
+	"displayName": "Owens Corning Quick Links - Default",
+	"contentType": "OwensCorningQuickLinks",
+	"isDefault": true,
+	"settings": {
+		"columns": {
+			"displayName": "Columns (Desktop)",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"three": {
+					"displayName": "3 columns (Default)",
+					"sortOrder": 10
+				},
+				"two": {
+					"displayName": "2 columns",
+					"sortOrder": 20
+				},
+				"four": {
+					"displayName": "4 columns",
+					"sortOrder": 30
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+fragment OwensCorningFooterColumn on OwensCorningFooterColumn {
+    Title
+    Links {
+        ...LinkCollection
+    }
+}

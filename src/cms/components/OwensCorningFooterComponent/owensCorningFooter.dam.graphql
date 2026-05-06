@@ -1,0 +1,30 @@
+fragment OwensCorningFooter on OwensCorningFooter {
+    LogoImage {
+        ...ContentUrl
+        ...ContentReferenceItem
+    }
+    Tagline {
+        html
+    }
+    SocialLinks {
+        Platform
+        Url {
+            default
+        }
+    }
+    Columns {
+        Title
+        Links {
+            ...LinkCollection
+        }
+    }
+    QuickLinksLeft {
+        ...LinkCollection
+    }
+    QuickLinksRight {
+        ...LinkCollection
+    }
+    CopyrightText {
+        html
+    }
+}

@@ -1,0 +1,10 @@
+fragment OwensCorningNewsItem on OwensCorningNewsItem {
+    Prehead
+    Title
+    Body {
+        html
+    }
+    Link {
+        ...LinkUrl
+    }
+}

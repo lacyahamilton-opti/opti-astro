@@ -1,0 +1,162 @@
+---
+import { Image as AstroImage } from 'astro:assets';
+import type {
+    DisplaySettingsFragment,
+    OwensCorningHeroFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningHeroFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings } = Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const minHeight = dictionary['minHeight'] || 'medium';
+const overlayStrength = dictionary['overlayStrength'] || 'medium';
+
+const heightClass =
+    minHeight === 'xlarge'
+        ? 'min-h-[720px]'
+        : minHeight === 'large'
+          ? 'min-h-[600px]'
+          : 'min-h-[480px]';
+
+const overlayClass =
+    overlayStrength === 'heavy'
+        ? 'bg-gradient-to-r from-black/85 via-black/50 to-transparent'
+        : overlayStrength === 'light'
+          ? 'bg-gradient-to-r from-black/55 via-black/20 to-transparent'
+          : 'bg-gradient-to-r from-black/75 via-black/30 to-transparent';
+
+const bgImageUrl =
+    (data.BackgroundImage as any)?.item?.Url ||
+    data.BackgroundImage?.url?.default ||
+    null;
+const bgImageAlt =
+    (data.BackgroundImage as any)?.item?.AltText ||
+    (data.BackgroundImage as any)?.item?._metadata?.displayName ||
+    data.Heading ||
+    '';
+
+const logoImageUrl =
+    (data.LogoImage as any)?.item?.Url ||
+    data.LogoImage?.url?.default ||
+    null;
+const logoImageAlt =
+    (data.LogoImage as any)?.item?.AltText ||
+    (data.LogoImage as any)?.item?._metadata?.displayName ||
+    'Logo';
+
+const headingLines = (data.Heading || '').split(/\r?\n/).filter(Boolean);
+const highlightedLines = (data.HighlightedHeading || '')
+    .split(/\r?\n/)
+    .filter(Boolean);
+
+const componentClass = 'component-oc-hero';
+---
+
+<section
+    class:list={[
+        'relative flex w-full items-center overflow-hidden bg-[#1a1a1a]',
+        heightClass,
+        componentClass,
+    ]}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    {
+        bgImageUrl && (
+            <AstroImage
+                src={bgImageUrl}
+                alt={bgImageAlt}
+                class="absolute inset-0 h-full w-full object-cover opacity-55"
+                inferSize
+            />
+        )
+    }
+
+    <div class:list={['absolute inset-0 z-[1]', overlayClass]} aria-hidden="true">
+    </div>
+
+    <div class="relative z-[2] max-w-[680px] px-6 py-16 md:px-16">
+        {
+            logoImageUrl && (
+                <div class="mb-6">
+                    <AstroImage
+                        src={logoImageUrl}
+                        alt={logoImageAlt}
+                        class="h-14 w-auto brightness-0 invert"
+                        inferSize
+                    />
+                </div>
+            )
+        }
+
+        {
+            (headingLines.length > 0 || highlightedLines.length > 0) && (
+                <h1 class="mb-5 font-['Oswald',sans-serif] text-[clamp(2.5rem,5vw,4.5rem)] font-semibold uppercase leading-[1.05] text-white">
+                    {headingLines.map((line, i) => (
+                        <>
+                            {line}
+                            {(i < headingLines.length - 1 ||
+                                highlightedLines.length > 0) && <br />}
+                        </>
+                    ))}
+                    {highlightedLines.map((line, i) => (
+                        <>
+                            <span class="text-[#e05b6a]">{line}</span>
+                            {i < highlightedLines.length - 1 && <br />}
+                        </>
+                    ))}
+                </h1>
+            )
+        }
+
+        {
+            data.Body?.html && (
+                <p
+                    class="mb-8 max-w-[480px] text-base leading-[1.65] text-white/85"
+                    set:html={data.Body.html}
+                />
+            )
+        }
+
+        {
+            data.Ctas && data.Ctas.length > 0 && (
+                <div class="flex flex-wrap gap-3">
+                    {data.Ctas.map((link) => {
+                        const buttonLink = getLink(
+                            link as ButtonLinkData,
+                            currentDomain,
+                        );
+                        const newWindow = link?.target === '_blank';
+                        return (
+                            <a
+                                class="border-2 border-[#c1241a] bg-[#c1241a] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:border-white hover:bg-transparent"
+                                href={buttonLink}
+                                target={newWindow ? '_blank' : undefined}
+                                rel={
+                                    newWindow
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                }
+                            >
+                                {link?.text}
+                            </a>
+                        );
+                    })}
+                </div>
+            )
+        }
+    </div>
+</section>

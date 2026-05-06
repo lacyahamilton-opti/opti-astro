@@ -1,0 +1,79 @@
+{
+	"key": "OwensCorningHomePage",
+	"displayName": "Owens Corning Home Page",
+	"description": "Owens Corning branded landing/home page composed of Owens Corning hero, card sets, quick links, attention bar, news section, and footer.",
+	"baseType": "_page",
+	"sortOrder": 0,
+	"mayContainTypes": ["*"],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [],
+	"properties": {
+		"HeroArea": {
+			"type": "array",
+			"displayName": "Hero Area",
+			"description": "Top hero region. Typically holds an Owens Corning Hero component.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"items": {
+				"type": "content",
+				"allowedTypes": [],
+				"restrictedTypes": []
+			}
+		},
+		"MainContentArea": {
+			"type": "array",
+			"displayName": "Main Content Area",
+			"description": "Main page body. Drop Owens Corning Card Sets, Quick Links, Attention Bar, News Section, etc. here.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {},
+			"items": {
+				"type": "content",
+				"allowedTypes": [],
+				"restrictedTypes": []
+			}
+		},
+		"FooterArea": {
+			"type": "array",
+			"displayName": "Footer Area",
+			"description": "Footer region. Typically holds an Owens Corning Footer component.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 30,
+			"editorSettings": {},
+			"items": {
+				"type": "content",
+				"allowedTypes": [],
+				"restrictedTypes": []
+			}
+		},
+		"SeoSettings": {
+			"type": "component",
+			"contentType": "PageSeoSettings",
+			"displayName": "SEO Settings",
+			"description": "",
+			"localized": false,
+			"required": false,
+			"group": "SeoSettings",
+			"sortOrder": 10,
+			"editorSettings": {}
+		},
+		"PageAdminSettings": {
+			"type": "component",
+			"contentType": "PageAdminSettings",
+			"displayName": "Page Admin Settings",
+			"description": "",
+			"localized": false,
+			"required": false,
+			"group": "AdminSettings",
+			"sortOrder": 10,
+			"editorSettings": {}
+		}
+	}
+}

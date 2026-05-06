@@ -1,0 +1,46 @@
+{
+	"key": "DefaultOwensCorningHero",
+	"displayName": "Owens Corning Hero - Default",
+	"contentType": "OwensCorningHero",
+	"isDefault": true,
+	"settings": {
+		"minHeight": {
+			"displayName": "Minimum Height",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"medium": {
+					"displayName": "Medium (~480px) (Default)",
+					"sortOrder": 10
+				},
+				"large": {
+					"displayName": "Large (~600px)",
+					"sortOrder": 20
+				},
+				"xlarge": {
+					"displayName": "X-Large (~720px)",
+					"sortOrder": 30
+				}
+			}
+		},
+		"overlayStrength": {
+			"displayName": "Overlay Strength",
+			"editor": "select",
+			"sortOrder": 20,
+			"choices": {
+				"light": {
+					"displayName": "Light",
+					"sortOrder": 10
+				},
+				"medium": {
+					"displayName": "Medium (Default)",
+					"sortOrder": 20
+				},
+				"heavy": {
+					"displayName": "Heavy",
+					"sortOrder": 30
+				}
+			}
+		}
+	}
+}

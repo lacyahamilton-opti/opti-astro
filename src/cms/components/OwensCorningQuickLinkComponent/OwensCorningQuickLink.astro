@@ -1,0 +1,70 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningQuickLinkFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext, getLink } from '../../shared/utils.ts';
+import type { ButtonLinkData } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+const currentDomain = Astro.url.origin;
+
+export interface Props {
+    key: string;
+    data: OwensCorningQuickLinkFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+const { key, data, displaySettings } = Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const iconColor = dictionary['iconColor'] || 'pink';
+const iconColorClass =
+    iconColor === 'red'
+        ? 'text-[#c1241a]'
+        : iconColor === 'black'
+          ? 'text-[#1a1a1a]'
+          : 'text-[#e05b6a]';
+
+const linkHref = data.Link
+    ? getLink(data.Link as ButtonLinkData, currentDomain)
+    : '#';
+const newWindow = (data.Link as any)?.target === '_blank';
+
+const componentClass = 'component-oc-quick-link';
+---
+
+<a
+    class:list={[
+        'flex items-center gap-4 border border-[#dddddd] bg-white p-4 transition-colors hover:border-[#c1241a] hover:bg-[#fdf8f8]',
+        componentClass,
+    ]}
+    href={linkHref}
+    target={newWindow ? '_blank' : undefined}
+    rel={newWindow ? 'noopener noreferrer' : undefined}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    {
+        data.IconClass && (
+            <span
+                class:list={[
+                    'flex h-9 w-9 flex-shrink-0 items-center justify-center text-xl',
+                    iconColorClass,
+                ]}
+                aria-hidden="true"
+            >
+                <i class={data.IconClass} />
+            </span>
+        )
+    }
+    {
+        data.Label && (
+            <span class="text-sm font-bold leading-tight text-[#333333]">
+                {data.Label}
+            </span>
+        )
+    }
+</a>

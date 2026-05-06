@@ -1,0 +1,19 @@
+{
+	"key": "DefaultOwensCorningSocialLink",
+	"displayName": "Owens Corning Social Link - Default",
+	"contentType": "OwensCorningSocialLink",
+	"isDefault": true,
+	"settings": {
+		"variant": {
+			"displayName": "Variant",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"default": {
+					"displayName": "Default",
+					"sortOrder": 10
+				}
+			}
+		}
+	}
+}

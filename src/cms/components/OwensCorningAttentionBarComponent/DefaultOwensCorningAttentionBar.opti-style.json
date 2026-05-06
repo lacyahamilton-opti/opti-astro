@@ -1,0 +1,42 @@
+{
+	"key": "DefaultOwensCorningAttentionBar",
+	"displayName": "Owens Corning Attention Bar - Default",
+	"contentType": "OwensCorningAttentionBar",
+	"isDefault": true,
+	"settings": {
+		"background": {
+			"displayName": "Background",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"gray": {
+					"displayName": "Light Gray (Default)",
+					"sortOrder": 10
+				},
+				"white": {
+					"displayName": "White",
+					"sortOrder": 20
+				},
+				"dark": {
+					"displayName": "Dark",
+					"sortOrder": 30
+				}
+			}
+		},
+		"buttonStyle": {
+			"displayName": "Button Style",
+			"editor": "select",
+			"sortOrder": 20,
+			"choices": {
+				"black": {
+					"displayName": "Black (Default)",
+					"sortOrder": 10
+				},
+				"red": {
+					"displayName": "Red",
+					"sortOrder": 20
+				}
+			}
+		}
+	}
+}

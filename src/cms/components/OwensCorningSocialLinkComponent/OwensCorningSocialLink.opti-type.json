@@ -1,0 +1,60 @@
+{
+	"key": "OwensCorningSocialLink",
+	"displayName": "Owens Corning - Social Link",
+	"description": "Single social media link for the footer (Facebook, Twitter, YouTube, LinkedIn, Instagram).",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"elementEnabled"
+	],
+	"properties": {
+		"Platform": {
+			"type": "string",
+			"displayName": "Platform",
+			"description": "",
+			"localized": false,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"enum": [
+				{
+					"value": "facebook",
+					"displayName": "Facebook"
+				},
+				{
+					"value": "twitter",
+					"displayName": "Twitter / X"
+				},
+				{
+					"value": "youtube",
+					"displayName": "YouTube"
+				},
+				{
+					"value": "linkedin",
+					"displayName": "LinkedIn"
+				},
+				{
+					"value": "instagram",
+					"displayName": "Instagram"
+				},
+				{
+					"value": "tiktok",
+					"displayName": "TikTok"
+				}
+			]
+		},
+		"Url": {
+			"type": "url",
+			"displayName": "URL",
+			"description": "",
+			"localized": false,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"editorSettings": {}
+		}
+	}
+}

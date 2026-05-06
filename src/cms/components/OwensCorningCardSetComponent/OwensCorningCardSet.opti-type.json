@@ -1,0 +1,28 @@
+{
+	"key": "OwensCorningCardSet",
+	"displayName": "Owens Corning - Card Set",
+	"description": "3-up card row of Owens Corning cards.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled"
+	],
+	"properties": {
+		"Cards": {
+			"type": "array",
+			"displayName": "Cards",
+			"description": "List of Owens Corning cards. 3 per row on desktop.",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"editorSettings": {},
+			"items": {
+				"type": "component",
+				"contentType": "OwensCorningCard"
+			}
+		}
+	}
+}

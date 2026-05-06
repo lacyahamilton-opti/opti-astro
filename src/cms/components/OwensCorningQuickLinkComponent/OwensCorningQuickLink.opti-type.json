@@ -1,0 +1,45 @@
+{
+	"key": "OwensCorningQuickLink",
+	"displayName": "Owens Corning - Quick Link",
+	"description": "Single quick link with a Font Awesome icon, label, and link.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"elementEnabled"
+	],
+	"properties": {
+		"IconClass": {
+			"type": "string",
+			"displayName": "Font Awesome Icon Class",
+			"description": "Font Awesome 4 class names, e.g. 'fa fa-home', 'fa fa-file-pdf-o', 'fa fa-search'.",
+			"localized": false,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 10,
+			"editorSettings": {}
+		},
+		"Label": {
+			"type": "string",
+			"displayName": "Label",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 20,
+			"indexingType": "searchable",
+			"editorSettings": {}
+		},
+		"Link": {
+			"type": "link",
+			"displayName": "Link",
+			"description": "",
+			"localized": true,
+			"required": false,
+			"group": "Information",
+			"sortOrder": 30,
+			"editorSettings": {}
+		}
+	}
+}
