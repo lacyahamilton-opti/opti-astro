@@ -1,0 +1,6 @@
+fragment OwensCorningProductList on OwensCorningProductList {
+    Heading
+    SubHeading
+    PimEndpoint
+    DisplayCount
+}

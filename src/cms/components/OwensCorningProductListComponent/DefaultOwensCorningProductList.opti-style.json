@@ -1,0 +1,42 @@
+{
+	"key": "DefaultOwensCorningProductList",
+	"displayName": "Owens Corning Product List - Default",
+	"contentType": "OwensCorningProductList",
+	"isDefault": true,
+	"settings": {
+		"background": {
+			"displayName": "Background",
+			"editor": "select",
+			"sortOrder": 10,
+			"choices": {
+				"white": {
+					"displayName": "White (Default)",
+					"sortOrder": 10
+				},
+				"gray": {
+					"displayName": "Light Gray",
+					"sortOrder": 20
+				}
+			}
+		},
+		"columns": {
+			"displayName": "Columns",
+			"editor": "select",
+			"sortOrder": 20,
+			"choices": {
+				"3": {
+					"displayName": "3 Columns (Default)",
+					"sortOrder": 10
+				},
+				"2": {
+					"displayName": "2 Columns",
+					"sortOrder": 20
+				},
+				"4": {
+					"displayName": "4 Columns",
+					"sortOrder": 30
+				}
+			}
+		}
+	}
+}

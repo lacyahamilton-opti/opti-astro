@@ -1,0 +1,91 @@
+{
+    "source": "PIM-MOCK",
+    "category": "shingles",
+    "lastSynced": "2026-05-06T20:00:00Z",
+    "products": [
+        {
+            "pim_id": "PIM-SHN-0001",
+            "sku": "MOCK-SHN-PSA-CHC",
+            "name": "ProShield Architectural",
+            "short_description": "Architectural laminate shingles with a dimensional profile and balanced curb appeal.",
+            "long_description": "<p>A versatile architectural shingle offering dimensional shadows, an algae-resistance package, and a wide color palette. Suitable for most residential roof styles.</p>",
+            "image_url": "https://placehold.co/600x400/444/ffffff?text=ProShield+Architectural",
+            "color_options": ["Charcoal", "Driftwood", "Slate", "Sandstone"],
+            "price_range": "$1.10 – $1.85 / sq ft",
+            "warranty_years": 30,
+            "wind_rating_mph": 110,
+            "category": "Architectural",
+            "last_updated": "2026-04-22T14:11:00Z"
+        },
+        {
+            "pim_id": "PIM-SHN-0002",
+            "sku": "MOCK-SHN-AGP-EVG",
+            "name": "AeroGuard Premium",
+            "short_description": "Premium designer shingles with a deeper shadow line and high wind resistance.",
+            "long_description": "<p>Designer-class shingles featuring an enhanced shadow profile, premium granule blends, and an upgraded warranty. Engineered for severe weather zones.</p>",
+            "image_url": "https://placehold.co/600x400/3b3a36/ffffff?text=AeroGuard+Premium",
+            "color_options": ["Evergreen", "Onyx", "Cedar", "Storm Grey"],
+            "price_range": "$1.95 – $2.85 / sq ft",
+            "warranty_years": 50,
+            "wind_rating_mph": 130,
+            "category": "Designer",
+            "last_updated": "2026-04-30T08:42:00Z"
+        },
+        {
+            "pim_id": "PIM-SHN-0003",
+            "sku": "MOCK-SHN-SCE-SLT",
+            "name": "StormCrest Elite",
+            "short_description": "Impact-rated shingles for hail-prone regions with reinforced backing.",
+            "long_description": "<p>UL 2218 Class 4 impact-rated shingles built for hail-prone regions. Reinforced backing and a polymer-modified binder help limit storm damage.</p>",
+            "image_url": "https://placehold.co/600x400/2c2e30/ffffff?text=StormCrest+Elite",
+            "color_options": ["Slate Black", "Weathered Wood", "Granite"],
+            "price_range": "$2.20 – $3.10 / sq ft",
+            "warranty_years": 50,
+            "wind_rating_mph": 130,
+            "category": "Impact-Rated",
+            "last_updated": "2026-04-15T19:03:00Z"
+        },
+        {
+            "pim_id": "PIM-SHN-0004",
+            "sku": "MOCK-SHN-CLD-TER",
+            "name": "ClimateLock Designer",
+            "short_description": "Cool-roof designer shingles engineered to reflect more of the sun's heat.",
+            "long_description": "<p>Reflective granule technology helps reduce attic heat gain in warm climates. Designer profile available in earth-tone palettes.</p>",
+            "image_url": "https://placehold.co/600x400/9a7755/ffffff?text=ClimateLock+Designer",
+            "color_options": ["Terracotta", "Antique Bronze", "Bone White"],
+            "price_range": "$2.40 – $3.20 / sq ft",
+            "warranty_years": 50,
+            "wind_rating_mph": 110,
+            "category": "Cool Roof",
+            "last_updated": "2026-04-08T11:55:00Z"
+        },
+        {
+            "pim_id": "PIM-SHN-0005",
+            "sku": "MOCK-SHN-HLT-BRN",
+            "name": "HeritageLine Three-Tab",
+            "short_description": "Classic three-tab shingles for budget-friendly residential projects.",
+            "long_description": "<p>Time-tested three-tab profile for budget-friendly roofs and rental properties. Easy to install and broadly available.</p>",
+            "image_url": "https://placehold.co/600x400/5a4a3a/ffffff?text=HeritageLine+Three-Tab",
+            "color_options": ["Brown", "Black", "Grey"],
+            "price_range": "$0.85 – $1.20 / sq ft",
+            "warranty_years": 25,
+            "wind_rating_mph": 60,
+            "category": "Three-Tab",
+            "last_updated": "2026-03-29T09:14:00Z"
+        },
+        {
+            "pim_id": "PIM-SHN-0006",
+            "sku": "MOCK-SHN-VPI-MID",
+            "name": "VistaPeak Impact",
+            "short_description": "Heavy-weight impact shingles with a deep architectural profile.",
+            "long_description": "<p>Heavy-weight architectural shingles built around an impact-resistant SBS-modified core. Ideal for higher-end retrofits.</p>",
+            "image_url": "https://placehold.co/600x400/4a4642/ffffff?text=VistaPeak+Impact",
+            "color_options": ["Midnight", "Sable", "Mountain Slate", "Birch"],
+            "price_range": "$2.60 – $3.50 / sq ft",
+            "warranty_years": 50,
+            "wind_rating_mph": 130,
+            "category": "Impact-Rated",
+            "last_updated": "2026-04-26T16:38:00Z"
+        }
+    ]
+}

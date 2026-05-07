@@ -31,6 +31,7 @@ import OwensCorningNewsSection from './OwensCorningNewsSectionComponent/OwensCor
 import OwensCorningFooterColumn from './OwensCorningFooterColumnComponent/OwensCorningFooterColumn.astro';
 import OwensCorningSocialLink from './OwensCorningSocialLinkComponent/OwensCorningSocialLink.astro';
 import OwensCorningFooter from './OwensCorningFooterComponent/OwensCorningFooter.astro';
+import OwensCorningProductList from './OwensCorningProductListComponent/OwensCorningProductList.astro';
 
 interface Props {
     contentPayload: ContentPayload;
@@ -374,6 +375,17 @@ const componentType = component._metadata.types[0];
 {
     componentType === 'OwensCorningFooter' && (
         <OwensCorningFooter
+            key={data?.key}
+            contentPayload={contentPayload}
+            data={component}
+            displaySettings={displaySettings}
+            displayTemplateKey={displayTemplateKey}
+        />
+    )
+}
+{
+    componentType === 'OwensCorningProductList' && (
+        <OwensCorningProductList
             key={data?.key}
             contentPayload={contentPayload}
             data={component}

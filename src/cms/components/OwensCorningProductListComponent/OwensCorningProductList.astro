@@ -1,0 +1,205 @@
+---
+import type {
+    DisplaySettingsFragment,
+    OwensCorningProductListFragment,
+} from '../../../../__generated/sdk';
+import type { ContentPayload } from '../../../graphql/shared/ContentPayload';
+import { getDictionaryFromDisplaySettings } from '../../../graphql/shared/displaySettingsHelpers';
+import { isEditContext } from '../../shared/utils.ts';
+
+const isCmsEdit = isEditContext(Astro.url);
+
+export interface Props {
+    key: string;
+    data: OwensCorningProductListFragment;
+    displaySettings: DisplaySettingsFragment[];
+    displayTemplateKey: string;
+    contentPayload: ContentPayload;
+}
+
+const { key, data, displaySettings, contentPayload } = Astro.props as Props;
+
+const dictionary = getDictionaryFromDisplaySettings(displaySettings);
+const bg = dictionary['background'] || 'white';
+const cols = dictionary['columns'] || '3';
+
+const bgClass = bg === 'gray' ? 'bg-[#f5f5f5]' : 'bg-white';
+const gridClass =
+    cols === '2'
+        ? 'grid-cols-1 md:grid-cols-2'
+        : cols === '4'
+          ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+          : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+
+interface PimProduct {
+    pim_id: string;
+    sku: string;
+    name: string;
+    short_description: string;
+    long_description: string;
+    image_url: string;
+    color_options: string[];
+    price_range: string;
+    warranty_years: number;
+    wind_rating_mph: number;
+    category: string;
+    last_updated: string;
+}
+
+interface PimFeed {
+    source: string;
+    category: string;
+    lastSynced: string;
+    products: PimProduct[];
+}
+
+let products: PimProduct[] = [];
+let feedSource = '';
+let fetchError = '';
+
+if (data.PimEndpoint) {
+    try {
+        const endpoint = data.PimEndpoint.startsWith('http')
+            ? data.PimEndpoint
+            : new URL(data.PimEndpoint, Astro.url).toString();
+        const res = await fetch(endpoint);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const feed: PimFeed = await res.json();
+        feedSource = feed.source ?? '';
+        products = feed.products ?? [];
+        const limit = data.DisplayCount ?? 0;
+        if (limit > 0) products = products.slice(0, limit);
+    } catch (e: any) {
+        fetchError = e?.message ?? 'Unknown error';
+    }
+}
+---
+
+<section
+    class:list={['px-6 py-14', bgClass, 'component-oc-product-list']}
+    data-epi-block-id={(isCmsEdit && key) || undefined}
+>
+    <div class="mx-auto max-w-[1280px]">
+        {
+            (data.Heading || data.SubHeading) && (
+                <div class="mb-10 border-b-4 border-[#c1241a] pb-4">
+                    {data.Heading && (
+                        <h2 class="font-['Oswald'] text-3xl font-semibold uppercase tracking-wide text-[#1a1a1a]">
+                            {data.Heading}
+                        </h2>
+                    )}
+                    {data.SubHeading && (
+                        <p class="mt-2 text-base text-gray-600">{data.SubHeading}</p>
+                    )}
+                    {feedSource && (
+                        <p class="mt-1 text-xs text-gray-400">
+                            Source: <span class="font-mono">{feedSource}</span>
+                        </p>
+                    )}
+                </div>
+            )
+        }
+
+        {
+            fetchError ? (
+                <div class="rounded border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                    Could not load products: {fetchError}
+                </div>
+            ) : products.length === 0 ? (
+                <p class="text-sm text-gray-500">No products found.</p>
+            ) : (
+                <div class:list={['grid gap-6', gridClass]}>
+                    {products.map((product) => (
+                        <article class="flex flex-col overflow-hidden rounded border border-[#dddddd] bg-white shadow-sm transition-shadow hover:shadow-md">
+                            <div class="relative overflow-hidden bg-gray-100">
+                                <img
+                                    src={product.image_url}
+                                    alt={product.name}
+                                    class="h-48 w-full object-cover"
+                                    loading="lazy"
+                                />
+                                <span class="absolute right-3 top-3 rounded bg-[#c1241a] px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-white">
+                                    {product.category}
+                                </span>
+                            </div>
+
+                            <div class="flex flex-1 flex-col p-5">
+                                <p class="mb-1 text-xs font-medium uppercase tracking-widest text-[#e05b6a]">
+                                    {product.sku}
+                                </p>
+                                <h3 class="mb-2 font-['Oswald'] text-xl font-semibold uppercase text-[#1a1a1a]">
+                                    {product.name}
+                                </h3>
+                                <p class="mb-4 flex-1 text-sm leading-relaxed text-gray-600">
+                                    {product.short_description}
+                                </p>
+
+                                <dl class="mb-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-[#dddddd] pt-4 text-sm">
+                                    <div>
+                                        <dt class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                                            Price
+                                        </dt>
+                                        <dd class="font-medium text-[#1a1a1a]">
+                                            {product.price_range}
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                                            Warranty
+                                        </dt>
+                                        <dd class="font-medium text-[#1a1a1a]">
+                                            {product.warranty_years}-year
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                                            Wind Rating
+                                        </dt>
+                                        <dd class="font-medium text-[#1a1a1a]">
+                                            {product.wind_rating_mph} mph
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                                            Colors
+                                        </dt>
+                                        <dd class="font-medium text-[#1a1a1a]">
+                                            {product.color_options.length} options
+                                        </dd>
+                                    </div>
+                                </dl>
+
+                                <div class="mb-4 flex flex-wrap gap-1.5">
+                                    {product.color_options.map((c) => (
+                                        <span class="rounded-full border border-[#dddddd] px-2.5 py-0.5 text-xs text-gray-600">
+                                            {c}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <a
+                                    href={`#${product.pim_id}`}
+                                    class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-[#c1241a] hover:underline"
+                                >
+                                    View Details
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        class="h-4 w-4"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </a>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            )
+        }
+    </div>
+</section>

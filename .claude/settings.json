@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(ssh-keyscan -t rsa,ecdsa,ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null && echo \"Added github.com to known_hosts\")",
+      "Bash(mkdir -p ~/.ssh)",
+      "Bash(chmod 700 ~/.ssh)",
+      "Bash(ssh-keyscan -t rsa,ecdsa,ed25519 github.com)",
+      "Bash(chmod 644 ~/.ssh/known_hosts)",
+      "Bash(ssh-keygen -t ed25519 -C \"lacy.hamilton@optimizely.com\" -f ~/.ssh/id_ed25519 -N \"\")",
+      "Bash(pbcopy)",
+      "Bash(mkdir -p /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningHeroComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningCardComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningCardSetComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningQuickLinkComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningQuickLinksComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningAttentionBarComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningNewsItemComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningNewsSectionComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningFooterColumnComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningSocialLinkComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components/OwensCorningFooterComponent /Users/lacy.hamilton/Documents/code/opti-astro/src/cms/pages/OwensCorningHomePage)",
+      "Bash(yarn type:push OwensCorningSocialLink)",
+      "Bash(yarn type:push OwensCorningFooterColumn)",
+      "Bash(yarn type:push OwensCorningFooter)",
+      "Bash(yarn type:push OwensCorningCard)",
+      "Bash(yarn type:push OwensCorningCardSet)",
+      "Bash(corepack enable *)",
+      "Bash(yarn --version)",
+      "Bash(corepack yarn *)",
+      "Bash(grep -E \"^\\\\.env$|^\\\\.env\\\\b\" /Users/lacy.hamilton/Documents/code/opti-astro/.gitignore)",
+      "Bash(gh repo *)",
+      "Bash(curl -s https://api.github.com/repos/lacyahamilton-opti/opti-astro)",
+      "Bash(curl -sH \"Accept: application/vnd.github+json\" https://api.github.com/repos/lacyahamilton-opti/opti-astro)",
+      "Bash(git fetch *)",
+      "Bash(curl -sH \"Accept: application/vnd.github+json\" \"https://api.github.com/repos/kunalshetye/opti-astro/pulls?state=open\")",
+      "Bash(curl -sH \"Accept: application/vnd.github+json\" \"https://api.github.com/search/issues?q=repo:kunalshetye/opti-astro+preview2+OR+remkoj\")",
+      "Bash(curl -sH \"Accept: application/vnd.github+json\" \"https://api.github.com/repos/kunalshetye/opti-astro/pulls/283\")",
+      "Bash(git merge *)",
+      "Bash(node -e ' *)",
+      "Bash(node --env-file=.env --input-type=module -e ' *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "WebSearch",
+      "WebFetch(domain:docs.developers.optimizely.com)",
+      "Bash(node --env-file=.env utils/seed-owens-corning.mjs)",
+      "WebFetch(domain:world.optimizely.com)",
+      "Bash(curl -sI \"https://app-epsalhastroh5i3wp001.cms.optimizely.com/\")",
+      "Bash(curl -sIL \"https://app-epsalhastroh5i3wp001.cms.optimizely.com/ui\")"
+    ],
+    "additionalDirectories": [
+      "/Users/lacy.hamilton/.ssh",
+      "/Users/lacy.hamilton/Documents/code/opti-astro/src/cms/components"
+    ]
+  }
+}

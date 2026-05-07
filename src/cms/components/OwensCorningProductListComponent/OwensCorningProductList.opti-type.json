@@ -1,0 +1,54 @@
+{
+	"key": "OwensCorningProductList",
+	"displayName": "Owens Corning - Product List",
+	"description": "Displays a grid of products fetched from an external PIM endpoint at render time.",
+	"baseType": "_component",
+	"sortOrder": 0,
+	"mayContainTypes": [],
+	"mediaFileExtensions": [],
+	"compositionBehaviors": [
+		"sectionEnabled"
+	],
+	"properties": {
+		"Heading": {
+			"type": "string",
+			"displayName": "Heading",
+			"description": "Section heading above the product grid.",
+			"localized": true,
+			"required": false,
+			"group": "Content",
+			"sortOrder": 10,
+			"editorSettings": {}
+		},
+		"SubHeading": {
+			"type": "string",
+			"displayName": "Sub-Heading",
+			"description": "Optional descriptor line beneath the heading.",
+			"localized": true,
+			"required": false,
+			"group": "Content",
+			"sortOrder": 20,
+			"editorSettings": {}
+		},
+		"PimEndpoint": {
+			"type": "string",
+			"displayName": "PIM Endpoint URL",
+			"description": "Absolute or relative URL of the PIM JSON feed (e.g. /api/pim/shingles.json).",
+			"localized": false,
+			"required": true,
+			"group": "DataSource",
+			"sortOrder": 30,
+			"editorSettings": {}
+		},
+		"DisplayCount": {
+			"type": "integer",
+			"displayName": "Max Products to Display",
+			"description": "Limit how many products are shown (0 = show all).",
+			"localized": false,
+			"required": false,
+			"group": "DataSource",
+			"sortOrder": 40,
+			"editorSettings": {}
+		}
+	}
+}
