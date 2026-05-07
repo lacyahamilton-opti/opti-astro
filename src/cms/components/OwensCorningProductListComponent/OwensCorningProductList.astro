@@ -60,8 +60,11 @@ const LOCAL_PIM: Record<string, PimFeed> = {
     'shingles.json': shinglesData as unknown as PimFeed,
 };
 
-let products: PimProduct[] = [];
-let feedSource = '';
+// Always start with the bundled shingles data so the component renders
+// even when PimEndpoint is null or Graph hasn't synced yet.
+const defaultFeed = shinglesData as unknown as PimFeed;
+let products: PimProduct[] = defaultFeed.products ?? [];
+let feedSource: string = defaultFeed.source ?? '';
 let fetchError = '';
 
 if (data.PimEndpoint) {
@@ -73,17 +76,19 @@ if (data.PimEndpoint) {
         const pimSlug = data.PimEndpoint.match(/\/api\/pim\/(.+\.json)/)?.[1];
         if (pimSlug) feed = LOCAL_PIM[pimSlug];
 
-        // Fall back to an external HTTP fetch for real PIM URLs.
-        if (!feed) {
+        // Only fetch truly external URLs (not localhost / self-calls).
+        if (!feed && !/localhost|127\.0\.0\.1/.test(data.PimEndpoint)) {
             const res = await fetch(data.PimEndpoint);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             feed = await res.json();
         }
 
-        feedSource = feed!.source ?? '';
-        products = feed!.products ?? [];
-        const limit = data.DisplayCount ?? 0;
-        if (limit > 0) products = products.slice(0, limit);
+        if (feed) {
+            feedSource = feed.source ?? '';
+            products = feed.products ?? [];
+            const limit = data.DisplayCount ?? 0;
+            if (limit > 0) products = products.slice(0, limit);
+        }
     } catch (e: any) {
         fetchError = e?.message ?? 'Unknown error';
     }
