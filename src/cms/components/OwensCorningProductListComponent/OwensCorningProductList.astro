@@ -1,4 +1,5 @@
 ---
+import shinglesData from '../../../data/pim-shingles.json';
 import type {
     DisplaySettingsFragment,
     OwensCorningProductListFragment,
@@ -53,20 +54,34 @@ interface PimFeed {
     products: PimProduct[];
 }
 
+// Local PIM feeds keyed by the slug that appears in /api/pim/<slug>.json.
+// Add new entries here as more PIM categories are created.
+const LOCAL_PIM: Record<string, PimFeed> = {
+    'shingles.json': shinglesData as unknown as PimFeed,
+};
+
 let products: PimProduct[] = [];
 let feedSource = '';
 let fetchError = '';
 
 if (data.PimEndpoint) {
     try {
-        const endpoint = data.PimEndpoint.startsWith('http')
-            ? data.PimEndpoint
-            : new URL(data.PimEndpoint, Astro.url).toString();
-        const res = await fetch(endpoint);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const feed: PimFeed = await res.json();
-        feedSource = feed.source ?? '';
-        products = feed.products ?? [];
+        let feed: PimFeed | undefined;
+
+        // For /api/pim/<slug>.json (with or without a host prefix),
+        // use the statically-imported data — no HTTP self-call needed.
+        const pimSlug = data.PimEndpoint.match(/\/api\/pim\/(.+\.json)/)?.[1];
+        if (pimSlug) feed = LOCAL_PIM[pimSlug];
+
+        // Fall back to an external HTTP fetch for real PIM URLs.
+        if (!feed) {
+            const res = await fetch(data.PimEndpoint);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            feed = await res.json();
+        }
+
+        feedSource = feed!.source ?? '';
+        products = feed!.products ?? [];
         const limit = data.DisplayCount ?? 0;
         if (limit > 0) products = products.slice(0, limit);
     } catch (e: any) {
