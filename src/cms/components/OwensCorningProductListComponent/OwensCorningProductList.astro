@@ -17,7 +17,7 @@ export interface Props {
     contentPayload: ContentPayload;
 }
 
-const { key, data, displaySettings, contentPayload } = Astro.props as Props;
+const { key, data, displaySettings } = Astro.props as Props;
 
 const dictionary = getDictionaryFromDisplaySettings(displaySettings);
 const bg = dictionary['background'] || 'white';
@@ -25,9 +25,9 @@ const cols = dictionary['columns'] || '3';
 
 const bgClass = bg === 'gray' ? 'bg-[#f5f5f5]' : 'bg-white';
 const gridClass =
-    cols === '2'
+    cols === 'col2'
         ? 'grid-cols-1 md:grid-cols-2'
-        : cols === '4'
+        : cols === 'col4'
           ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
           : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 

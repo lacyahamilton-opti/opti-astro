@@ -24,15 +24,15 @@
 			"editor": "select",
 			"sortOrder": 20,
 			"choices": {
-				"3": {
+				"col3": {
 					"displayName": "3 Columns (Default)",
 					"sortOrder": 10
 				},
-				"2": {
+				"col2": {
 					"displayName": "2 Columns",
 					"sortOrder": 20
 				},
-				"4": {
+				"col4": {
 					"displayName": "4 Columns",
 					"sortOrder": 30
 				}
